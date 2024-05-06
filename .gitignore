@@ -1,0 +1,30 @@
+# ? valgrind
+vgcore.*
+
+# ? obj
+*.o
+
+# ? lib
+*.a
+
+# ? executable
+*.out
+unit_tests
+trade
+
+# ? coverage
+*.gcda
+*.gcno
+*.gcov
+
+# ? tmp
+*~
+\#*#
+.cache
+log.bin
+
+# ? vscode
+.vscode/
+
+# ? compilation database
+compile_commands.json

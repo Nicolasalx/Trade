@@ -1,0 +1,109 @@
+name: my_cppaction
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  check_all:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    container:
+      image: epitechcontent/epitest-docker:latest
+      volumes:
+        - ${{ github.workspace }}:/app
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: check compilation
+      run: |
+          echo "## 🚀 Compilation result" >> $GITHUB_STEP_SUMMARY
+          {
+            set +e
+            make ADDITIONAL_FLAGS="-Werror"
+            if [ $? -ne 0 ]; then
+              echo "- ### Compilation failed ❌" >> $GITHUB_STEP_SUMMARY
+              echo "Compilation failed."
+              exit 1
+            else
+              echo "- ### Compilation succeed ✅" >> $GITHUB_STEP_SUMMARY
+              exit 0
+            fi
+          }
+
+    - name: check functional_tests
+      run: ./functionalTest.sh
+
+    - name: check unit_tests
+      run: |
+          echo "## 🧪 Test results" >> $GITHUB_STEP_SUMMARY
+          {
+            set +e
+            make unit_tests ADDITIONAL_FLAGS="-Werror"
+            if [ $? -ne 0 ]; then
+              echo "- ### Test compilation failed ❌" >> $GITHUB_STEP_SUMMARY
+              echo "Test compilation failed."
+              exit 1
+            else
+              ./unit_tests
+              echo "| Passed ✅ | Failed ❌ | Assertions 🔬 |" >> $GITHUB_STEP_SUMMARY
+              echo "| :-------- | :-------- | :------------ |" >> $GITHUB_STEP_SUMMARY
+              ./unit_tests --color=never 2>&1 | grep "===] Synthesis: Tested: " \
+                | awk '{print "|" $7, "|" $10, "|" $4}' >> $GITHUB_STEP_SUMMARY
+              exit 0
+            fi
+          }
+
+    - name: check code_coverage
+      run: |
+          echo "## 📊 Code Coverage" >> $GITHUB_STEP_SUMMARY
+          ./unit_tests
+          make gcovr
+          echo "| Lines | Executed | Coverage 📊 |" >> $GITHUB_STEP_SUMMARY
+          echo "| :------- | :---------- | :---------- |" >> $GITHUB_STEP_SUMMARY
+          gcovr --sort-percentage --exclude tests/ | grep "TOTAL" \
+            | awk '{ORS=""; print "|" $2, "|" $3}' >> $GITHUB_STEP_SUMMARY
+          gcovr -s --sort-percentage --exclude tests/ | grep "lines:" \
+            | awk '{print "|" $2}' >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Branches | Taken | Coverage 📊 |" >> $GITHUB_STEP_SUMMARY
+          echo "| :---------- | :------- | :---------- |" >> $GITHUB_STEP_SUMMARY
+          gcovr --sort-percentage --exclude tests/ -b | grep "TOTAL" \
+            | awk '{ORS=""; print "|" $2, "|" $3}' >> $GITHUB_STEP_SUMMARY
+          gcovr -s --sort-percentage --exclude tests/ | grep "branches:" \
+            | awk '{print "|" $2}' >> $GITHUB_STEP_SUMMARY
+
+    - name: check memory leak
+      run: |
+          echo "## 🛡️ Memory leak" >> $GITHUB_STEP_SUMMARY
+          valgrind --leak-check=full ./unit_tests 2>&1 | tee valgrind_log.txt
+          LEAKS=$(cat valgrind_log.txt | grep "ERROR SUMMARY: 0" | wc -l)
+          if [ "$LEAKS" -eq "0" ]; then
+            echo "Memory leaks detected."
+            cat valgrind_log.txt | grep 'ERROR SUMMARY:' \
+              | awk '{print "- ### " $4, "errors from " $7, "contexts ❗"}' >> $GITHUB_STEP_SUMMARY
+            exit 1
+          fi
+          cat valgrind_log.txt | grep 'ERROR SUMMARY:' \
+            | awk '{print "- ### " $4, "errors from " $7, "contexts ✅"}' >> $GITHUB_STEP_SUMMARY
+
+    - name: install clang-tidy
+      run: sudo dnf install -y clang-tools-extra
+
+    - name: install bear
+      run: sudo dnf install -y bear
+
+    - name: code analyse
+      run: |
+        make code_analyse 2>&1 | tee code_analyse_log.txt
+        {
+          set +e
+          CLANG_TIDY_WARNING=$(grep -c "warning: " code_analyse_log.txt)
+        }
+        if [ "$CLANG_TIDY_WARNING" -ne 0 ]; then
+          echo "::warning::$CLANG_TIDY_WARNING warning detected !"
+        fi

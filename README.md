@@ -19,19 +19,19 @@ Download it from the [Github source](https://github.com/jmerle/ai-bot-workspace/
 - If you’re on Linux, you should use ai-bot-workspace-2.4.3-x86_64.AppImage
 - If you’re on Windows, you sould use ai-bot-workspace-setup-2.4.3.exe
 
-IMG1
+![image](https://github.com/EpitechPromo2027/B-CNA-410-PAR-4-1-trade-thibaud.cathala/assets/114945623/309bb40e-2a23-4181-bde0-74b40ab7413e)
 
 The executables launch ai-bot-workspace’s portal. There, you must select Crypto Trader
 
 After go to the settings here:
 
-IMG2
+![image](https://github.com/EpitechPromo2027/B-CNA-410-PAR-4-1-trade-thibaud.cathala/assets/114945623/fc230253-dc0a-4df9-ab4f-1aaf80d5ac73)
 
 Now let's see the field where we need to configure.
 
 The three main points are on the image below:
 
-IMG3
+![image](https://github.com/EpitechPromo2027/B-CNA-410-PAR-4-1-trade-thibaud.cathala/assets/114945623/e530508a-bcf7-4b20-8fa0-3ec9872afecc)
 
 1) The point is the absolute path where your binary is placed.
 2) The point is the place where your file .csv who contains your date is placed, but the path begin at your actual place.
@@ -152,11 +152,11 @@ void Tr::Trade::pass()
 
 A training file is represented like this:
 
-IMG4
+![image](https://github.com/EpitechPromo2027/B-CNA-410-PAR-4-1-trade-thibaud.cathala/assets/114945623/f7cdf016-eb8d-40f5-91af-38a0ced8af95)
 
 Each line of the file is a candle represented like that in trading
 
-IMG5
+![image](https://github.com/EpitechPromo2027/B-CNA-410-PAR-4-1-trade-thibaud.cathala/assets/114945623/26e40b5b-8035-49e9-a1d4-5fa8ffc87ec0)
 
 # Technicalities
 

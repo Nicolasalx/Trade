@@ -19,11 +19,6 @@ namespace Tr
 {
     class Trade
     {
-        enum action_e {
-            BUY,
-            SELL,
-            PASS
-        };
         enum candle_format_e {
             PAIR,
             DATE,
@@ -45,11 +40,6 @@ namespace Tr
             std::size_t candles_given = 0;
             std::size_t initial_stack = 0;
             double transaction_fee_percent = 0.0;
-        };
-
-        struct signal_t {
-            action_e action = PASS;
-            double amount = 0.0;    
         };
 
         struct stack_t {
@@ -74,6 +64,16 @@ namespace Tr
         };
 
         public:
+            enum action_e {
+                BUY,
+                SELL,
+                PASS
+            };
+
+            struct signal_t {
+                action_e action = PASS;
+                double amount = 0.0;    
+            };
             Trade() = default;
             ~Trade() = default;
 
@@ -89,7 +89,6 @@ namespace Tr
             void manageAnUpdate(std::vector<std::string> lineTokens);
 
             // Add new candle (Update command)
-            void addCandle(const std::string &inputCandle);
             void addCryptoCandle(const std::string &cryptoLine);
             void setPairToCandle(const std::string &pairName);
 

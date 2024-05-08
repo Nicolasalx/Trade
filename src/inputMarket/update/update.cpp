@@ -14,7 +14,7 @@ void Tr::Trade::manageAnUpdate(std::vector<std::string> lineTokens)
         throw my::tracked_exception("Parsing Input: In the Update command, the list need to be of size 3!");
     }
     if (lineTokens.at(2) == "next_candles") {
-        addCandle(lineTokens.at(3));
+        addCryptoCandle(lineTokens.at(3));
     } else if (lineTokens.at(2) == "stacks") {
         handleStacks(lineTokens.at(3));
     } else {

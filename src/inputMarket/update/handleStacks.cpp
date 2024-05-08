@@ -31,8 +31,8 @@ void Tr::Trade::handleStacks(const std::string &inputStacks)
     std::vector<std::string> dataEachAmount;
     my::split_string(inputStacks, ",", dataEachAmount);
 
-    if (dataEachAmount.size() != 3) {
-        throw my::tracked_exception("Parsing Input: In the command stacks the 3 pairs are not present!");
+    if (dataEachAmount.size() != 2) {
+        throw my::tracked_exception("Parsing Input: In the command stacks the 2 pairs are not present!");
     }
     for (const auto &crypto: dataEachAmount) {
         setAmountToOneCrypto(crypto);

@@ -17,7 +17,6 @@ void Tr::Trade::checkSignal()
     } else {
         pass();
     }
-
     _signal.action = PASS;
 }
 
@@ -44,6 +43,10 @@ void Tr::Trade::manageAnAction()
     checkMMLongAndShort();
 
     checkSignal();
+
+    if (_stack.USDT > 100) {
+        buyOnMarket(0.1);
+    }
 }
 
 /* Algorithm to use

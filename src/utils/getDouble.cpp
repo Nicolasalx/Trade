@@ -12,7 +12,7 @@ double Tr::Trade::getDouble(const std::string &input)
 {
     for (const auto &chr: input) {
         if (!std::isdigit(chr) && chr != '.') {
-            throw my::tracked_exception("Parsing input: Failed to get a int");
+            throw my::tracked_exception("Parsing input: Failed to get a double");
         }
     }
     return (std::stod(input));    

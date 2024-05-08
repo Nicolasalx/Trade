@@ -44,8 +44,3 @@ void Tr::Trade::addCryptoCandle(const std::string &cryptoLine)
     }
     _listCandles.push_back(candle);
 }
-
-void Tr::Trade::addCandle(const std::string &inputCandle)
-{
-    addCryptoCandle(inputCandle);
-}

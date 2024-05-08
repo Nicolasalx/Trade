@@ -152,11 +152,11 @@ void Tr::Trade::pass()
 
 A training file is represented like this:
 
-![image](https://github.com/EpitechPromo2027/B-CNA-410-PAR-4-1-trade-thibaud.cathala/assets/114945623/f7cdf016-eb8d-40f5-91af-38a0ced8af95)
+![image](https://github.com/EpitechPromo2027/B-CNA-410-PAR-4-1-trade-thibaud.cathala/assets/114945623/26e40b5b-8035-49e9-a1d4-5fa8ffc87ec0)
 
 Each line of the file is a candle represented like that in trading
 
-![image](https://github.com/EpitechPromo2027/B-CNA-410-PAR-4-1-trade-thibaud.cathala/assets/114945623/26e40b5b-8035-49e9-a1d4-5fa8ffc87ec0)
+![Capture d’écran du 2024-05-07 16-30-28](https://github.com/EpitechPromo2027/B-CNA-410-PAR-4-1-trade-thibaud.cathala/assets/114945623/50e5e0a4-8d79-4d0a-a9e8-8b0bc74f554c)
 
 # Technicalities
 

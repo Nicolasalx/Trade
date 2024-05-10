@@ -7,7 +7,7 @@
 
 #include "trade.hpp"
 
-void Tr::Trade::checkOnePairBolBand(std::size_t period, double inputMoney, double outputMoney)
+void Tr::Trade::checkOnePairBolBand(std::size_t period)
 {
     double centralBand = 0;
     double upperBand = 0;
@@ -17,10 +17,9 @@ void Tr::Trade::checkOnePairBolBand(std::size_t period, double inputMoney, doubl
     upperBand = centralBand + (2 * computeStandardDeviation(_listCandles, period));
     lowerBand = centralBand - (2 * computeStandardDeviation(_listCandles, period));
 
-    (void)upperBand;
-    (void)lowerBand;
-    (void)inputMoney;
-    (void)outputMoney;
+    _listCandles.back().stats.bollinger_bands.upperBand = upperBand;
+    _listCandles.back().stats.bollinger_bands.centralBand = centralBand;
+    _listCandles.back().stats.bollinger_bands.lowerBand = lowerBand;
 }
 
 // Bande de Bollinger
@@ -31,5 +30,5 @@ void Tr::Trade::computeBollingerBands()
     if (_listCandles.size() < period) {
         return;
     }
-    checkOnePairBolBand(period, _stack.USDT, _stack.BTC);
+    checkOnePairBolBand(period);
 }

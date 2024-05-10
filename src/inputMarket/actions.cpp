@@ -20,32 +20,30 @@ void Tr::Trade::checkSignal()
     _signal.action = PASS;
 }
 
-void Tr::Trade::checkOnePair()
-{
-    // Make action to check if we buy sell or pass
-}
-
-void Tr::Trade::checkMMLongAndShort()
-{
-    if (_listCandles.size() < 50) {
-        return;
-    }
-    checkOnePair();
-}
-
-void Tr::Trade::manageAnAction()
+void Tr::Trade::makeStatistics()
 {
     computeShortMovingAverage();
     computeLongMovingAverage();
     computeBollingerBands();
+    computeRSI();
+    computeMACD();
+}
 
-    // Indicator to check if the moving average short change of trend with moving average long
-    checkMMLongAndShort();
+void Tr::Trade::analyseOfTheMarket()
+{
 
-    checkSignal();
+}
 
-    if (_stack.USDT > 100) {
-        buyOnMarket(0.1);
+void Tr::Trade::manageAnAction()
+{
+    makeStatistics();
+    analyseOfTheMarket();
+
+    //checkSignal();
+    if (_stack.USDT > 100 && _listCandles.size() > 20) {
+        buyOnMarket(0.001);
+    } else {
+        pass();
     }
 }
 

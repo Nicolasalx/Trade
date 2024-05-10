@@ -17,7 +17,6 @@ void Tr::Trade::computeShortMovingAverage()
     }
     double movAvgUSDTBTC = computeMovingAverage(_listCandles, period);
 
-    _listCandles.back().stats.lastMMShort = movAvgUSDTBTC;
-
+    _listCandles.back().stats.moving_average.lastMMShort = movAvgUSDTBTC;
     //std::cout << "Short USDT_BTC => " << std::to_string(movAvgUSDTBTC) << "\n";
 }

@@ -47,9 +47,30 @@ namespace Tr
             double USDT = 0.0;
         };
 
-        struct statistics_t {
+        struct moving_average_t {
             double lastMMShort = 0.0;
             double lastMMLong = 0.0;
+        };
+
+        struct bollinger_bands_t {
+            double upperBand = 0.0;
+            double centralBand = 0.0;
+            double lowerBand = 0.0;
+        };
+
+        struct rsi_t {
+            double rsi = 0.0;
+        };
+
+        struct macd_t {
+            double macd = 0.0;
+        };
+
+        struct statistics_t {
+            moving_average_t moving_average;
+            bollinger_bands_t bollinger_bands;
+            rsi_t rsi;
+            macd_t macd;
         };
 
         struct candle_t {
@@ -117,18 +138,24 @@ namespace Tr
 
             // ! Statistics
 
+            void makeStatistics();
+            void analyseOfTheMarket();
+
             // Moving Average Short and Long
             void computeShortMovingAverage();
             double computeMovingAverage(std::vector<candle_t> candlesCrypto, int period);
             void computeLongMovingAverage();
-            void checkMMLongAndShort();
-            void checkOnePair();
 
             // Boolinger Bands
             void computeBollingerBands();
             double computeStandardDeviation(std::vector<candle_t> candlesCrypto, std::size_t period);
+            void checkOnePairBolBand(std::size_t period);
 
-            void checkOnePairBolBand(std::size_t period, double inputMoney, double outputMoney);
+            // RSI
+            void computeRSI();
+
+            // MACD
+            void computeMACD();
 
             // Utils
             int getInt(const std::string &input);

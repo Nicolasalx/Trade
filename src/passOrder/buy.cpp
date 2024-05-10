@@ -17,5 +17,7 @@ void Tr::Trade::buyOnMarket(double amount)
         orderAction(namePair, amount, BUY);
         outputBuy = std::string("buy ") + namePair + " " + std::to_string(amount);
         std::cout << outputBuy << "\n";
-    } catch(const std::exception &) {}
+    } catch(const std::exception &exception) {
+        std::cerr << exception.what() << "\n";
+    }
 }

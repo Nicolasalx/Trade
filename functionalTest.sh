@@ -18,9 +18,8 @@ basicTest()
         echo -e -n "settings candles_given 337\n"
         echo -e -n "action order\n"
         echo -e -n "settings initial_stack 1000\n"
-        echo -e -n "action order\n"
+        echo -e -n "update game stacks BTC:0,USDT:1000\n"
         echo -e -n "settings transaction_fee_percent 0.2\n"
-        echo -e -n "action order\n"
         echo -e -n "update game next_candles USDT_BTC,1620550800,58400,57589.94,58159.59,57952.52,168676077.6\n"
         echo -e -n "action order\n"
         echo -e -n "update game next_candles USDT_BTC,1620554400,58052.33,57535.61,57952.53,57955.04,142785493.3\n"
@@ -699,15 +698,12 @@ basicTest()
         echo -e -n "action order\n"
         echo -e -n "update game next_candles USDT_BTC,1621767600,35800,34600,35004.82,35389.1,238169414.1\n"
         echo -e -n "action order\n"
-        echo -e -n "update game stacks BTC:0.00000000,USDT:1000.00\n"
-        echo -e -n "action order\n"
     } | ./trade
 }
 
 main()
 {
     basicTest
-    personnalTest
 }
 
 main

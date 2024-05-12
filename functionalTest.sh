@@ -10,13 +10,9 @@ basicTest()
 {
     {
         echo -e -n "settings candle_interval 3600\n"
-        echo -e -n "action order\n"
         echo -e -n "settings candle_format pair,date,high,low,open,close,volume\n"
-        echo -e -n "action order\n"
         echo -e -n "settings candles_total 556\n"
-        echo -e -n "action order\n"
         echo -e -n "settings candles_given 337\n"
-        echo -e -n "action order\n"
         echo -e -n "settings initial_stack 1000\n"
         echo -e -n "update game stacks BTC:0,USDT:1000\n"
         echo -e -n "settings transaction_fee_percent 0.2\n"

@@ -128,13 +128,16 @@ namespace Tr
             // Buy and Sell
             void buyOnMarket(double amount);
             void sellOnMarket(double amount);
-            void orderAction(const std::string &pair, double amount, action_e action);
+            void orderAction(const std::string &pair, std::pair<double, double> lot_amountUSDT, action_e action);
 
-            void increaseAmount(const std::string &currency, double amount);
-            void decreaseAmount(const std::string &currency, double amount);
+            void increaseAmount(const std::string &currency, double lot_amountUSDT);
+            void decreaseAmount(const std::string &currency, double lot_amountUSDT);
 
             void getPairName(std::string &namePair);
             void pass();
+
+            // Compute Lot Size
+            std::pair<double, double> computeLotSize(action_e action, double accountBalance, double priceEntry, double stopLoss);
 
             // ! Statistics
 
@@ -156,6 +159,7 @@ namespace Tr
 
             // MACD
             void computeMACD();
+            double computeEMA(std::vector<double> closingPrices, std::size_t period);
 
             // Utils
             int getInt(const std::string &input);

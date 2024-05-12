@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** Trade
+** B-CNA-410-PAR-4-1-trade-thibaud.cathala
 ** File description:
 ** getPairName
 */

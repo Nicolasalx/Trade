@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** Trade
+** B-CNA-410-PAR-4-1-trade-thibaud.cathala
 ** File description:
 ** orderAction
 */
@@ -22,18 +22,16 @@ void Tr::Trade::increaseAmount(const std::string &currency, double amount)
 
 void Tr::Trade::decreaseAmount(const std::string &currency, double amount)
 {
-    double amountToDecrease = _listCandles.back().close * amount;
-
-    if (currency == "USDT" && (_stack.USDT - amountToDecrease) > 0) {
-        _stack.USDT -= (amountToDecrease + amountToDecrease * _settings.transaction_fee_percent);
-    } else if (currency == "BTC" && (_stack.BTC - amountToDecrease) > 0) {
-        _stack.BTC -= (amountToDecrease + amountToDecrease * _settings.transaction_fee_percent);
+    if (currency == "USDT" && (_stack.USDT - amount) > 0) {        
+        _stack.USDT -= amount;
+    } else if (currency == "BTC" && (_stack.BTC - amount) > 0) {
+        _stack.BTC -= amount;
     } else {
         throw my::tracked_exception("Order Action: The pair gived has not been recognized!");
     }
 }
 
-void Tr::Trade::orderAction(const std::string &pair, double amount, action_e action)
+void Tr::Trade::orderAction(const std::string &pair, std::pair<double, double> lot_amountUSDT,action_e action)
 {
     std::vector<std::string> lineTokens;
     my::split_string(pair, "_", lineTokens);
@@ -42,10 +40,10 @@ void Tr::Trade::orderAction(const std::string &pair, double amount, action_e act
         throw my::tracked_exception("Order Action: The pair need to have 2 arguments!");
     }
     if (action == BUY) {
-        decreaseAmount(lineTokens[0], amount);
-        increaseAmount(lineTokens[1], amount);
+        decreaseAmount(lineTokens[0], lot_amountUSDT.second);
+        increaseAmount(lineTokens[1], lot_amountUSDT.first);
     } else if (action == SELL) {
-        decreaseAmount(lineTokens[1], amount);
-        increaseAmount(lineTokens[0], amount);
+        decreaseAmount(lineTokens[1], lot_amountUSDT.first);
+        increaseAmount(lineTokens[0], lot_amountUSDT.second);
     }
 }

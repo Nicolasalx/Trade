@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** Trade
+** B-CNA-410-PAR-4-1-trade-thibaud.cathala
 ** File description:
 ** buy
 */
@@ -14,7 +14,8 @@ void Tr::Trade::buyOnMarket(double amount)
 
     try {
         getPairName(namePair);
-        orderAction(namePair, amount, BUY);
+        std::pair<double, double> lot_amountUSDT = computeLotSize(BUY, _stack.USDT, 60000, 58000);
+        orderAction(namePair, lot_amountUSDT, BUY);
         outputBuy = std::string("buy ") + namePair + " " + std::to_string(amount);
         std::cout << outputBuy << "\n";
     } catch(const std::exception &exception) {

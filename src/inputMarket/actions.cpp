@@ -1,6 +1,6 @@
 /*
 ** EPITECH PROJECT, 2024
-** Trade
+** B-CNA-410-PAR-4-1-trade-thibaud.cathala
 ** File description:
 ** actions
 */
@@ -31,8 +31,11 @@ void Tr::Trade::makeStatistics()
 
 void Tr::Trade::analyseOfTheMarket()
 {
-
+    
 }
+
+bool buy = false;
+bool sell = false;
 
 void Tr::Trade::manageAnAction()
 {
@@ -40,8 +43,16 @@ void Tr::Trade::manageAnAction()
     analyseOfTheMarket();
 
     //checkSignal();
-    if (_stack.USDT > 100 && _listCandles.size() > 20) {
-        buyOnMarket(0.001);
+    if (_listCandles.size() > 20) {
+        if (buy == false) {
+            buyOnMarket(0.001);
+            buy = true;
+        } else if (sell == false) {
+            sellOnMarket(0.001);
+            sell = true;
+        } else {
+            pass();
+        }
     } else {
         pass();
     }

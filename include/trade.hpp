@@ -144,7 +144,7 @@ namespace Tr
             void pass();
 
             // Compute Lot Size
-            std::pair<double, double> computeLotSize(action_e action, double accountBalance, double priceEntry, double stopLossoss, double takeProfit);
+            std::pair<double, double> computeLotSize(action_e action, double accountBalance, double priceEntry, double stopLossoss);
 
             // ! Statistics
 

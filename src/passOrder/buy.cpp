@@ -16,7 +16,7 @@ void Tr::Trade::buyOnMarket(double amount)
         getPairName(namePair);
         std::pair<double, double> lot_amountUSDT = computeLotSize(BUY, _stack.USDT, 60000, 58000);
         orderAction(namePair, lot_amountUSDT, BUY);
-        outputBuy = std::string("buy ") + namePair + " " + std::to_string(amount);
+        outputBuy = std::string("buy ") + namePair + " " + std::to_string(lot_amountUSDT.first);
         std::cout << outputBuy << "\n";
     } catch(const std::exception &exception) {
         std::cerr << exception.what() << "\n";

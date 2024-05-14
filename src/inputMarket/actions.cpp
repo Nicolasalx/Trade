@@ -31,7 +31,9 @@ void Tr::Trade::makeStatistics()
 
 void Tr::Trade::analyseOfTheMarket()
 {
-    
+    std::cerr << "To Buy = " <<
+        (_listCandles.back().stats.bollinger_bands.weirdness * 100.0)
+            * (this->_max_order_percentage / 100.0) << '\n';
 }
 
 bool buy = false;

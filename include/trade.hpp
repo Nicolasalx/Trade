@@ -91,6 +91,13 @@ namespace Tr
                 PASS
             };
 
+            struct order_t {
+                action_e action;
+                double lotSize;
+                double takeProfit;
+                double stopLoss;
+            };
+
             struct signal_t {
                 action_e action = PASS;
                 double amount = 0.0;    
@@ -137,7 +144,7 @@ namespace Tr
             void pass();
 
             // Compute Lot Size
-            std::pair<double, double> computeLotSize(action_e action, double accountBalance, double priceEntry, double stopLoss);
+            std::pair<double, double> computeLotSize(action_e action, double accountBalance, double priceEntry, double stopLossoss, double takeProfit);
 
             // ! Statistics
 
@@ -168,6 +175,7 @@ namespace Tr
         private:
             std::vector <candle_t> _listCandles;
             std::vector<candle_format_e> _candleFormat;
+            std::vector<order_t> _orderBook;
             settings_t _settings;
             stack_t _stack;
             bool _stopLoop = false;

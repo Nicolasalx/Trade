@@ -7,7 +7,7 @@
 
 #include "trade.hpp"
 
-std::pair<double, double> Tr::Trade::computeLotSize(action_e action, double accountBalance, double priceEntry, double stopLoss)
+std::pair<double, double> Tr::Trade::computeLotSize(action_e action, double accountBalance, double priceEntry, double stopLoss, double takeProfit)
 {
     /*
         Les paramètres sont les suivants:
@@ -22,16 +22,31 @@ std::pair<double, double> Tr::Trade::computeLotSize(action_e action, double acco
     double difference = std::abs(priceEntry - stopLoss);
     double sizeLot = riskAmount / difference;
     double amountToBet = sizeLot * priceEntry;
+    order_t order;
 
     // Part with transaction fees
     if (action == BUY) {
         double amountAfterFees = amountToBet - (amountToBet * (_settings.transaction_fee_percent / 100));
         double newSizeLot = (amountAfterFees * sizeLot) / amountToBet;
+
+        order.stopLoss = stopLoss;
+        order.takeProfit = takeProfit;
+        order.action = BUY;
+        order.lotSize = newSizeLot;
+        _orderBook.push_back(order);
+
         // We return amountToBet and not amountAfterFees because only the sizeLot decrease
         return std::make_pair(newSizeLot, amountToBet);
     } else {
         double sizeLotAfterFees = sizeLot - (sizeLot * (_settings.transaction_fee_percent / 100));
         double newamountToBet = (sizeLotAfterFees * amountToBet) / sizeLot;
+
+        order.stopLoss = stopLoss;
+        order.takeProfit = takeProfit;
+        order.action = SELL;
+        order.lotSize = sizeLot;
+        _orderBook.push_back(order);
+
         // We return sizeLot and not sizeLotAfterFees because only the amountToBet decrease
         return std::make_pair(sizeLot, newamountToBet);
     }

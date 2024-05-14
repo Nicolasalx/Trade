@@ -56,6 +56,7 @@ namespace Tr
             double upperBand = 0.0;
             double centralBand = 0.0;
             double lowerBand = 0.0;
+            double weirdness = 0.0;
         };
 
         struct rsi_t {
@@ -183,6 +184,7 @@ namespace Tr
             stack_t _stack;
             bool _stopLoop = false;
             signal_t _signal;
+            double _max_order_percentage = 2.0; // between 100 <-> 0
     };
 }
 

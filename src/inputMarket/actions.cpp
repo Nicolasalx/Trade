@@ -37,6 +37,9 @@ void Tr::Trade::checkIntersectionMovingAverage()
 void Tr::Trade::analyseOfTheMarket()
 {
     checkIntersectionMovingAverage();
+    std::cerr << "To Buy = " <<
+        (_listCandles.back().stats.bollinger_bands.weirdness * 100.0)
+            * (this->_max_order_percentage / 100.0) << '\n';
 }
 
 void Tr::Trade::manageAnAction()

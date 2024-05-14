@@ -20,6 +20,8 @@ void Tr::Trade::checkOnePairBolBand(std::size_t period)
     _listCandles.back().stats.bollinger_bands.upperBand = upperBand;
     _listCandles.back().stats.bollinger_bands.centralBand = centralBand;
     _listCandles.back().stats.bollinger_bands.lowerBand = lowerBand;
+    _listCandles.back().stats.bollinger_bands.weirdness =
+        (_listCandles.back().close - lowerBand) / (upperBand - lowerBand);
 }
 
 // Bande de Bollinger

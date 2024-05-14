@@ -15,5 +15,5 @@ double Tr::Trade::getDouble(const std::string &input)
             throw my::tracked_exception("Parsing input: Failed to get a double");
         }
     }
-    return (std::stod(input));    
+    return (std::stod(input));
 }

@@ -100,7 +100,7 @@ namespace Tr
 
             struct signal_t {
                 action_e action = PASS;
-                double amount = 0.0;    
+                double percentage = 0.0;    
             };
             Trade() = default;
             ~Trade() = default;
@@ -133,8 +133,8 @@ namespace Tr
             void checkSignal();
 
             // Buy and Sell
-            void buyOnMarket(double amount);
-            void sellOnMarket(double amount);
+            void buyOnMarket(double percentage);
+            void sellOnMarket(double percentage);
             void orderAction(const std::string &pair, std::pair<double, double> lot_amountUSDT, action_e action);
 
             void increaseAmount(const std::string &currency, double lot_amountUSDT);
@@ -147,9 +147,7 @@ namespace Tr
             std::pair<double, double> computeLotSize(action_e action, double accountBalance, double priceEntry, double stopLossoss);
 
             // ! Statistics
-
             void makeStatistics();
-            void analyseOfTheMarket();
 
             // Moving Average Short and Long
             void computeShortMovingAverage();
@@ -167,6 +165,11 @@ namespace Tr
             // MACD
             void computeMACD();
             double computeEMA(std::vector<double> closingPrices, std::size_t period);
+
+            // ! Analyse of the market
+            void analyseOfTheMarket();
+
+            void checkIntersectionMovingAverage();
 
             // Utils
             int getInt(const std::string &input);

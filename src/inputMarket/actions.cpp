@@ -11,9 +11,9 @@
 void Tr::Trade::checkSignal()
 {
     if (_signal.action == BUY) {
-        buyOnMarket(_signal.amount);
+        buyOnMarket(_signal.percentage);
     } else if (_signal.action == SELL) {
-        sellOnMarket(_signal.amount);
+        sellOnMarket(_signal.percentage);
     } else {
         pass();
     }
@@ -29,33 +29,22 @@ void Tr::Trade::makeStatistics()
     computeMACD();
 }
 
-void Tr::Trade::analyseOfTheMarket()
+void Tr::Trade::checkIntersectionMovingAverage()
 {
-    
+
 }
 
-bool buy = false;
-bool sell = false;
+void Tr::Trade::analyseOfTheMarket()
+{
+    checkIntersectionMovingAverage();
+}
 
 void Tr::Trade::manageAnAction()
 {
     makeStatistics();
     analyseOfTheMarket();
 
-    //checkSignal();
-    if (_listCandles.size() > 20) {
-        if (buy == false) {
-            buyOnMarket(0.001);
-            buy = true;
-        } else if (sell == false) {
-            sellOnMarket(0.001);
-            sell = true;
-        } else {
-            pass();
-        }
-    } else {
-        pass();
-    }
+    checkSignal();
 }
 
 /* Algorithm to use

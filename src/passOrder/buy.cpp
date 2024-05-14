@@ -7,7 +7,7 @@
 
 #include "trade.hpp"
 
-void Tr::Trade::buyOnMarket(double amount)
+void Tr::Trade::buyOnMarket(double percentage)
 {
     std::string namePair = "";
     std::string outputBuy = "";

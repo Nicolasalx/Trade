@@ -7,6 +7,49 @@
 
 #include "trade.hpp"
 
+double Tr::Trade::getAmountPortfolio()
+{
+    double amountUSDT = _stack.USDT;
+    double amountBTC = _stack.BTC * _listCandles.back().close;
+
+    return amountUSDT + amountBTC;
+}
+
+std::pair<double, double> Tr::Trade::computeOrderSize(action_e action, double percentage)
+{
+    if (action == BUY) {
+        double amountPortfolio = getAmountPortfolio();
+        double amountToBet = amountPortfolio - (amountPortfolio * ((100.0 - percentage) * 0.01));
+        double amountAfterFees = amountToBet - ((amountToBet * _settings.transaction_fee_percent) / 100.0);
+        double sizeLot = amountAfterFees / _listCandles.back().close;
+
+        if (_stack.USDT - amountToBet < 0) {
+            amountToBet = _stack.USDT;
+            amountAfterFees = amountToBet - ((amountToBet * _settings.transaction_fee_percent) / 100.0);
+            sizeLot = amountAfterFees / _listCandles.back().close;
+        }
+        return std::make_pair(sizeLot, amountToBet);
+    } else {
+        double amountPortfolio = getAmountPortfolio();
+        double amountToBet = amountPortfolio - (amountPortfolio * ((100.0 - percentage) * 0.01));
+        double amountAfterFees = amountToBet - ((amountToBet * _settings.transaction_fee_percent) / 100.0);
+        double sizeLot = amountAfterFees / _listCandles.back().close;
+        double newSizeLot = sizeLot;
+
+        //std::cout << "AMOUNT AFTER FEES: " << amountAfterFees << "\n";
+        //std::cout << "SIZE LOT: " << sizeLot << "\n";
+
+        if (_stack.BTC - sizeLot < 0) {
+            newSizeLot = _stack.BTC;
+            //std::cout << "NEW SIZE LOT: " << sizeLot << "\n";
+            amountAfterFees = (newSizeLot * amountAfterFees) / sizeLot;
+            //std::cout << "New AMOUNT: " << amountAfterFees << "\n";
+        }
+
+        return std::make_pair(newSizeLot, amountAfterFees);
+    }
+}
+
 std::pair<double, double> Tr::Trade::computeLotSize(action_e action, double accountBalance, double priceEntry, double stopLoss)
 {
     /*

@@ -18,6 +18,7 @@ void Tr::Trade::checkSignal()
         pass();
     }
     _signal.action = PASS;
+    _signal.percentage = 0;
 }
 
 void Tr::Trade::makeStatistics()

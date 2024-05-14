@@ -145,7 +145,9 @@ namespace Tr
             void pass();
 
             // Compute Lot Size
-            std::pair<double, double> computeLotSize(action_e action, double accountBalance, double priceEntry, double stopLossoss);
+            std::pair<double, double> computeOrderSize(action_e action, double percentage);
+
+            std::pair<double, double> computeLotSize(action_e action, double accountBalance, double priceEntry, double stopLoss);
 
             // ! Statistics
             void makeStatistics();
@@ -168,6 +170,8 @@ namespace Tr
             double computeEMA(std::vector<double> closingPrices, std::size_t period);
 
             // ! Analyse of the market
+            double getAmountPortfolio();
+
             void analyseOfTheMarket();
 
             void checkIntersectionMovingAverage();

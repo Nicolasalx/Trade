@@ -14,9 +14,11 @@ void Tr::Trade::sellOnMarket(double percentage)
 
     try {
         getPairName(namePair);
-        std::pair<double, double> lot_amountUSDT = computeLotSize(SELL, _stack.USDT, 60000, 58000);
+        std::pair<double, double> lot_amountUSDT = computeOrderSize(SELL, percentage);
         orderAction(namePair, lot_amountUSDT, SELL);
         outputSell = std::string("sell ") + namePair + " " + std::to_string(lot_amountUSDT.first);
         std::cout << outputSell << "\n";
-    } catch(const std::exception &) {}
+    } catch(const std::exception &) {
+        pass();
+    }
 }

@@ -67,11 +67,20 @@ namespace Tr
             double macd = 0.0;
         };
 
+        struct cloud_t {
+            double tenkanSen9;
+            double kijunSen26;
+            double lagging26;
+            double senkouSpanA;
+            double senkouSpanB;
+        };
+
         struct statistics_t {
             moving_average_t moving_average;
             bollinger_bands_t bollinger_bands;
             rsi_t rsi;
             macd_t macd;
+            cloud_t cloud;
         };
 
         struct candle_t {
@@ -168,6 +177,10 @@ namespace Tr
             // MACD
             void computeMACD();
             double computeEMA(std::vector<double> closingPrices, std::size_t period);
+
+            // cloud of Ichimoku
+            void computeCloud();
+            double cloudAverage(std::size_t period);
 
             // ! Analyse of the market
             double getAmountPortfolio();

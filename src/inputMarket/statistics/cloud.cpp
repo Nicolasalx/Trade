@@ -35,10 +35,4 @@ void Tr::Trade::computeCloud()
         this->_listCandles.back().stats.cloud.kijunSen26) / 2.0;
 
     this->_listCandles.back().stats.cloud.senkouSpanB = cloudAverage(26);
-
-    std::cerr << this->_listCandles.back().stats.cloud.tenkanSen9 << "___"
-        << this->_listCandles.back().stats.cloud.kijunSen26 << "___"
-        << this->_listCandles.back().stats.cloud.lagging26 << "___"
-        << this->_listCandles.back().stats.cloud.senkouSpanA << "___"
-        << this->_listCandles.back().stats.cloud.senkouSpanB << '\n';
 }

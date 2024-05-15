@@ -42,10 +42,10 @@ void Tr::Trade::analyseOfTheMarket()
         (_listCandles.back().stats.bollinger_bands.weirdness * 100.0)
             * (this->_max_order_percentage / 100.0);
     if (this->_signal.percentage > 0) {
-        this->_signal.action = Tr::Trade::SELL;
+        this->_signal.action = Tr::Trade::BUY;
     } else if (this->_signal.percentage < 0) {
         this->_signal.percentage = std::abs(this->_signal.percentage);
-        this->_signal.action = Tr::Trade::BUY;
+        this->_signal.action = Tr::Trade::SELL;
     } else {
         this->_signal.action = Tr::Trade::PASS;
     }

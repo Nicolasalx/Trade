@@ -12,6 +12,7 @@ int main(void)
 {
     Tr::Trade trade;
 
+    std::srand(time(nullptr));
     try {
         trade.engineTrading();
     } catch (const std::exception &exception) {

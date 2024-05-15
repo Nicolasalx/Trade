@@ -188,7 +188,7 @@ namespace Tr
             stack_t _stack;
             bool _stopLoop = false;
             signal_t _signal;
-            double _max_order_percentage = 2.0; // between 100 <-> 0
+            double _max_order_percentage = 100.0; // between 100 <-> 0
     };
 }
 

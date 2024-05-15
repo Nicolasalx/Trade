@@ -28,6 +28,7 @@ void Tr::Trade::makeStatistics()
     computeBollingerBands();
     computeRSI();
     computeMACD();
+    computeCloud();
 }
 
 void Tr::Trade::checkIntersectionMovingAverage()

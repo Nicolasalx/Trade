@@ -176,7 +176,7 @@ namespace Tr
 
             // MACD
             void computeMACD();
-            double computeEMA(std::vector<double> closingPrices, std::size_t period);
+            double computeEMA(std::size_t period);
 
             // cloud of Ichimoku
             void computeCloud();

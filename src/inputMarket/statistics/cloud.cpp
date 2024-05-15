@@ -12,7 +12,7 @@ double Tr::Trade::cloudAverage(std::size_t period)
     double average = 0.0;
 
     for (int i = (this->_listCandles.size() - 1);
-        i >= (this->_listCandles.size() - period - 1); --i)
+        i >= (int(this->_listCandles.size()) - period - 1); --i)
     {
         average = this->_listCandles.at(i).low + this->_listCandles.at(i).high;
     }

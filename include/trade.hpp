@@ -217,6 +217,8 @@ namespace Tr
             bool _stopLoop = false;
             signal_t _signal;
             double _max_order_percentage = 100.0; // between 100 <-> 0
+
+            bool orderOpen = false;
     };
 }
 

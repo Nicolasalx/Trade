@@ -26,7 +26,8 @@ void Tr::Trade::sellOnMarket(double percentage)
             outputSell = std::string("sell ") + namePair + " " + std::to_string(lot_amountUSDT.first);
             std::cout << outputSell << "\n";
         }
-        //std::cerr << "BTC: " << _stack.BTC << " / USDT: " << _stack.USDT << "\n"; 
+        orderOpen = false;
+        std::cerr << "BTC: " << _stack.BTC << " / USDT: " << _stack.USDT << "\n"; 
     } catch(const std::exception &) {
         pass();
     }

@@ -22,11 +22,11 @@ double Tr::Trade::computeEMA(std::size_t period)
 
 void Tr::Trade::computeMACD()
 {
-    if (this->_listCandles.size() < 26) {
+    if (this->_listCandles.size() <= 26) {
         return;
     }
-    this->_listCandles.back().stats.macd.macd = computeEMA(12) - computeEMA(26);
-    this->_listCandles.back().stats.macd.signal = computeEMA(9) - computeEMA(26);
+    this->_listCandles.back().stats.macd.macd = computeEMA(26);
+    this->_listCandles.back().stats.macd.signal = computeEMA(12);
     std::cerr << "MACD: " << this->_listCandles.back().stats.macd.macd <<
         ", signal: " << this->_listCandles.back().stats.macd.signal << "\n";
 }

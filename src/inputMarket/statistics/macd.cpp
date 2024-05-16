@@ -12,7 +12,7 @@ double Tr::Trade::computeEMA(std::size_t period)
     double multiplier = 2.0 / (period + 1);
     double ema = 0.0;
 
-    for (int i = (this->_listCandles.size() - 1);
+    for (std::size_t i = (this->_listCandles.size() - 1);
         i >= (int(this->_listCandles.size()) - period - 1); --i)
     {
         ema += (this->_listCandles.at(i).close - ema) * multiplier;

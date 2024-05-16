@@ -7,7 +7,6 @@
 
 #include "trade.hpp"
 
-// Exponential Moving Average
 double Tr::Trade::computeEMA(std::size_t period)
 {
     double multiplier = 2.0 / (period + 1);

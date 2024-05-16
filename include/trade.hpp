@@ -65,6 +65,7 @@ namespace Tr
 
         struct macd_t {
             double macd = 0.0;
+            double signal = 0.0;
         };
 
         struct cloud_t {

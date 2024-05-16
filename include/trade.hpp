@@ -76,12 +76,19 @@ namespace Tr
             double senkouSpanB;
         };
 
+        struct rgs_t {
+            double relative;
+            double movingAverage;
+            double standardDeviation;
+        };
+
         struct statistics_t {
             moving_average_t moving_average;
             bollinger_bands_t bollinger_bands;
             rsi_t rsi;
             macd_t macd;
             cloud_t cloud;
+            rgs_t rgs;
         };
 
         struct candle_t {
@@ -111,7 +118,7 @@ namespace Tr
 
             struct signal_t {
                 action_e action = PASS;
-                double percentage = 0.0;    
+                double percentage = 0.0;
             };
             Trade() = default;
             ~Trade() = default;
@@ -182,6 +189,11 @@ namespace Tr
             // cloud of Ichimoku
             void computeCloud();
             double cloudAverage(std::size_t period);
+
+            // RGS
+            void relativeCandle(std::size_t period);
+            void deviationCandle(std::size_t period);
+            void averageCandle(std::size_t period);
 
             // ! Analyse of the market
             double getAmountPortfolio();

@@ -29,6 +29,9 @@ void Tr::Trade::makeStatistics()
     computeRSI();
     computeMACD();
     //computeCloud();
+    averageCandle(20);
+    relativeCandle(20);
+    deviationCandle(20);
 }
 
 void Tr::Trade::checkIntersectionMovingAverage()

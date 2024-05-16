@@ -7,7 +7,6 @@
 
 #include "trade.hpp"
 
-// Exponential Moving Average
 double Tr::Trade::computeEMA(std::size_t period)
 {
     double multiplier = 2.0 / (period + 1);
@@ -25,5 +24,7 @@ void Tr::Trade::computeMACD()
         return;
     }
     this->_listCandles.back().stats.macd.macd = computeEMA(12) - computeEMA(26);
-    //std::cerr << "MACD: " << this->_listCandles.back().stats.macd.macd << "\n";
+    this->_listCandles.back().stats.macd.signal = computeEMA(9);
+    std::cerr << "MACD: " << this->_listCandles.back().stats.macd.macd <<
+        ", signal: " << this->_listCandles.back().stats.macd.signal << "\n";
 }

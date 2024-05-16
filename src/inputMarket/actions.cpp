@@ -28,7 +28,6 @@ void Tr::Trade::makeStatistics()
     computeBollingerBands();
     computeRSI();
     computeMACD();
-    computeCloud();
     averageCandle(20);
     relativeCandle(20);
     deviationCandle(20);

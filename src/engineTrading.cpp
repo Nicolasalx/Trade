@@ -48,4 +48,11 @@ void Tr::Trade::engineTrading()
         std::cout << "---------------------------------------------- END ----------------------------------------------\n";
         */
     }
+    std::cout << "REPORT ORDER BOOK:" << "\n";
+    std::cout << "NB WIN BUY: " << info_orders.winBuy << "\n";
+    std::cout << "NB LOOSE BUY: " << info_orders.looseBuy << "\n";
+    std::cout << "NB WIN SELL: " << info_orders.winSell << "\n";
+
+    std::cout << "NB LOOSE SELL: " << info_orders.looseSell << "\n";
+
 }

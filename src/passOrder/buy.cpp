@@ -14,10 +14,19 @@ void Tr::Trade::buyOnMarket(double percentage)
 
     try {
         getPairName(namePair);
-        std::pair<double, double> lot_amountUSDT = computeOrderSize(BUY, percentage);
-        orderAction(namePair, lot_amountUSDT, BUY);
-        outputBuy = std::string("buy ") + namePair + " " + std::to_string(lot_amountUSDT.first);
-        std::cout << outputBuy << "\n";
+
+        if (percentage > 0.0) {
+            std::pair<double, double> lot_amountUSDT = computeSimpleOrder(BUY, percentage); // computeOrderSize(BUY, percentage);
+            orderAction(namePair, lot_amountUSDT, BUY);
+            outputBuy = std::string("buy ") + namePair + " " + std::to_string(lot_amountUSDT.first);
+            std::cout << outputBuy << "\n";
+        } else {
+            std::pair<double, double> lot_amountUSDT = computeLotSize(BUY); // computeOrderSize(BUY, percentage);
+            orderAction(namePair, lot_amountUSDT, BUY);
+            outputBuy = std::string("buy ") + namePair + " " + std::to_string(lot_amountUSDT.first);
+            std::cout << outputBuy << "\n";
+        }
+        //std::cerr << "BTC: " << _stack.BTC << " / USDT: " << _stack.USDT << "\n"; 
     } catch(const std::exception &exception) {
         pass();
     }

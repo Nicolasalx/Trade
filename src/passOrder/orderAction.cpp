@@ -22,9 +22,9 @@ void Tr::Trade::increaseAmount(const std::string &currency, double amount)
 
 void Tr::Trade::decreaseAmount(const std::string &currency, double amount)
 {
-    if (currency == "USDT" && (_stack.USDT - amount) > 0) {        
+    if (currency == "USDT" && (_stack.USDT - amount) >= 1 && amount > 0) {
         _stack.USDT -= amount;
-    } else if (currency == "BTC" && (_stack.BTC - amount) > 0) {
+    } else if (currency == "BTC" && (_stack.BTC - amount) >= 0 && amount > 0) {
         _stack.BTC -= amount;
     } else {
         throw my::tracked_exception("Order Action: The pair gived has not been recognized!");
@@ -46,4 +46,5 @@ void Tr::Trade::orderAction(const std::string &pair, std::pair<double, double> l
         decreaseAmount(lineTokens[1], lot_amountUSDT.first);
         increaseAmount(lineTokens[0], lot_amountUSDT.second);
     }
+    //std::cout << "STACK USDT: " << _stack.USDT << " / STACK BTC: " << _stack.BTC << "\n";
 }

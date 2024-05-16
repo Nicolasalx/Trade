@@ -13,6 +13,7 @@
     #include <string>
     #include <iostream>
     #include <cctype>
+    #include <list>
     #include <map>
 
 namespace Tr
@@ -93,10 +94,13 @@ namespace Tr
             };
 
             struct order_t {
-                action_e action;
-                double lotSize;
-                double takeProfit;
-                double stopLoss;
+                action_e action = PASS;
+                double lotSize = 0.0;
+                double amountUSDT = 0.0;
+
+                double priceEntry = 0.0;
+                double takeProfit = 0.0;
+                double stopLoss = 0.0;
             };
 
             struct signal_t {
@@ -147,7 +151,10 @@ namespace Tr
             // Compute Lot Size
             std::pair<double, double> computeOrderSize(action_e action, double percentage);
 
-            std::pair<double, double> computeLotSize(action_e action, double accountBalance, double priceEntry, double stopLoss);
+            std::pair<double, double> computeLotSize(action_e action);
+            std::pair<double, double> computeLotSize2(action_e action, double percentage);
+            std::pair<double, double> computeSimpleOrder(action_e action, double amount);
+
 
             // ! Statistics
             void makeStatistics();
@@ -171,24 +178,33 @@ namespace Tr
 
             // ! Analyse of the market
             double getAmountPortfolio();
-
             void analyseOfTheMarket();
-
             void checkIntersectionMovingAverage();
+            void checkRSIValue();
+            void checkTPSL();
 
             // Utils
             int getInt(const std::string &input);
             double getDouble(const std::string &input);
 
+            struct info_orders_t { // ! To remove
+                std::size_t winBuy = 0;
+                std::size_t looseBuy = 0;
+                std::size_t winSell = 0;
+                std::size_t looseSell = 0;
+            };
+
         private:
+            info_orders_t info_orders; // ! To remove
             std::vector <candle_t> _listCandles;
             std::vector<candle_format_e> _candleFormat;
-            std::vector<order_t> _orderBook;
+            std::list<order_t> _orderBook;
             settings_t _settings;
             stack_t _stack;
             bool _stopLoop = false;
             signal_t _signal;
-            double _max_order_percentage = 2.0; // between 100 <-> 0
+            double _max_order_percentage = 100.0; // between 100 <-> 0
+
     };
 }
 

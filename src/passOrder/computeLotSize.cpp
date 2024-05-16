@@ -122,12 +122,15 @@ std::pair<double, double> Tr::Trade::computeSimpleOrder(action_e action, double 
         double amountInUSDT = newSizeLot * _listCandles.back().close;
 
         if (_stack.USDT - amountInUSDT < 0) {
-            amountInUSDT = _stack.USDT; // On achète le reste du portefeuille
+            double partToKeep = 2.0;
+            amountInUSDT = _stack.USDT - ((_stack.USDT * partToKeep) / 100.0); // On achète le reste du portefeuille
             double amountWithoutFees = amountInUSDT - ((amountInUSDT * _settings.transaction_fee_percent) / 100.0);
             amount = amountWithoutFees / _listCandles.back().close;
         }
         //std::cout << "BTC: " << _stack.BTC << " / USDT: " << _stack.USDT << "\n"; 
         //std::cout << "SIZELOT: +" << amount << " / AMOUNT: -" << amountInUSDT << "\n";
+
+
 
         return std::make_pair(amount, amountInUSDT);
     } else {
@@ -161,7 +164,7 @@ std::pair<double, double> Tr::Trade::computeLotSize(action_e action)
     double percentageTP = 4.0;
     double percentageSL = 3.0;
 
-    double riskPercentage = 30.0;
+    double riskPercentage = 20.0;
     double riskPerTrade = riskPercentage / 100.0;
 
     double accountBalance = 0.0;
@@ -225,6 +228,8 @@ std::pair<double, double> Tr::Trade::computeLotSize(action_e action)
         if (newSizeLot > 0 && amountToBet > 1 && _stack.USDT - amountToBet > 0) {            
             _orderBook.push_back(order);
         } else {
+            newSizeLot = 0;
+            amountToBet = 0;
             throw my::tracked_exception("Failed to BUY amount is 0!");
         }
         return std::make_pair(newSizeLot, amountToBet);

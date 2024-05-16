@@ -208,6 +208,7 @@ namespace Tr
             void checkIntersectionMovingAverage();
             void checkRSIValue();
             void checkTPSL();
+            void checkMACD();
 
             // Utils
             int getInt(const std::string &input);
@@ -232,6 +233,7 @@ namespace Tr
             double _max_order_percentage = 100.0; // between 100 <-> 0
 
             bool orderOpen = false;
+            bool isInBearRun = false;
     };
 }
 

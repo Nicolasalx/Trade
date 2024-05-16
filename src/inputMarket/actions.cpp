@@ -28,7 +28,6 @@ void Tr::Trade::makeStatistics()
     computeBollingerBands();
     computeRSI();
     computeMACD();
-    //computeCloud();
     averageCandle(20);
     relativeCandle(20);
     deviationCandle(20);
@@ -38,11 +37,13 @@ void Tr::Trade::checkIntersectionMovingAverage()
 {
     std::size_t idx = _listCandles.size() - 1;
 
-    if (_listCandles.at(idx).stats.moving_average.lastMMShort > _listCandles.at(idx).stats.moving_average.lastMMLong) {
-        if (_listCandles.at(idx - 1).stats.moving_average.lastMMShort <= _listCandles.at(idx - 1).stats.moving_average.lastMMLong) {
-            _signal.action = Tr::Trade::BUY;
-            _signal.percentage = 0.0;
-        }
+    if (_listCandles.at(idx).stats.moving_average.lastMMShort > _listCandles.at(idx).stats.moving_average.lastMMLong
+        && _listCandles.at(idx - 1).stats.moving_average.lastMMShort <= _listCandles.at(idx - 1).stats.moving_average.lastMMLong) {
+            isInBearRun = false;
+    }
+    if (_listCandles.at(idx).stats.moving_average.lastMMShort < _listCandles.at(idx).stats.moving_average.lastMMLong
+        && _listCandles.at(idx - 1).stats.moving_average.lastMMShort >= _listCandles.at(idx - 1).stats.moving_average.lastMMLong) {
+            isInBearRun = true;
     }
 }
 
@@ -57,10 +58,25 @@ void Tr::Trade::checkRSIValue()
     }
 }
 
+void Tr::Trade::checkMACD()
+{
+    std::size_t idx = _listCandles.size() - 1;
+
+    if (this->_listCandles.at(idx).stats.macd.macd > this->_listCandles.at(idx).stats.macd.signal &&
+        this->_listCandles.at(idx - 1).stats.macd.macd < this->_listCandles.at(idx - 1).stats.macd.signal) {
+            _signal.action = BUY;
+    }
+}
+
 void Tr::Trade::analyseOfTheMarket()
 {
-    //checkIntersectionMovingAverage();
+    checkIntersectionMovingAverage();
+    
+    if (isInBearRun == true) {
+        return;
+    } 
     checkRSIValue();
+    //checkMACD();
 
     //this->_signal.percentage =
     //    (_listCandles.back().stats.bollinger_bands.weirdness * 100.0)

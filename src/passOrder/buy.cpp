@@ -6,6 +6,7 @@
 */
 
 #include "trade.hpp"
+#include "my_tracked_exception.hpp"
 
 void Tr::Trade::buyOnMarket(double percentage)
 {
@@ -28,7 +29,7 @@ void Tr::Trade::buyOnMarket(double percentage)
         }
         orderOpen = true;
         std::cerr << "BTC: " << _stack.BTC << " / USDT: " << _stack.USDT << "\n"; 
-    } catch(const std::exception &exception) {
+    } catch(const my::tracked_exception &exception) {
         pass();
     }
 }

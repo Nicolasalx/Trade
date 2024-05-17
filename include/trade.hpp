@@ -204,7 +204,7 @@ namespace Tr
             void checkRSIValue();
             void checkTPSL();
             void checkMACD();
-            double computeEMA2(std::size_t period, std::vector<double>& values);
+            void checkMAVolume();
 
             // Utils
             int getInt(const std::string &input);

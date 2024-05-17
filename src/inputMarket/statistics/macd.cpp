@@ -27,6 +27,6 @@ void Tr::Trade::computeMACD()
     }
     this->_listCandles.back().stats.macd.macd = computeEMA(26);
     this->_listCandles.back().stats.macd.signal = computeEMA(12);
-    std::cerr << "MACD: " << this->_listCandles.back().stats.macd.macd <<
-        ", signal: " << this->_listCandles.back().stats.macd.signal << "\n";
+    //std::cerr << "MACD: " << this->_listCandles.back().stats.macd.macd <<
+    //    ", signal: " << this->_listCandles.back().stats.macd.signal << "\n";
 }

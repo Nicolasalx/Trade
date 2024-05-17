@@ -53,10 +53,7 @@ void Tr::Trade::checkSwitchTendance()
 
 void Tr::Trade::checkRSIValue()
 {
-    if ((_listCandles.back().stats.rsi.rsi > 70 || _listCandles.back().close > _listCandles.back().stats.bollinger_bands.upperBand) && orderOpen == true) {
-        _signal.action = Tr::Trade::SELL;
-        _signal.percentage = 0.0;
-    } else if ((_listCandles.back().stats.rsi.rsi < 30 || _listCandles.back().close < _listCandles.back().stats.bollinger_bands.lowerBand) && orderOpen == false) {
+    if ((_listCandles.back().stats.rsi.rsi < 30 || _listCandles.back().close < _listCandles.back().stats.bollinger_bands.lowerBand) && orderOpen == false) {
         _signal.action = Tr::Trade::BUY;
         _signal.percentage = 0.0;
     }
@@ -72,6 +69,22 @@ void Tr::Trade::checkMACD()
     }
 }
 
+#include <iomanip>
+
+void Tr::Trade::checkMAVolume()
+{
+    /*
+        This strategy consist to check the two last volume and if they are above the moving average 200 AND if they are both positive candle => It's a signal
+    */
+
+    std::size_t idx = _listCandles.size() - 1;
+    if (_listCandles.at(idx).volume > _listCandles.at(idx).stats.volume.movingAverage200 && _listCandles.at(idx).close > _listCandles.at(idx).open &&
+        _listCandles.at(idx - 1).volume > _listCandles.at(idx - 1).stats.volume.movingAverage200 && _listCandles.at(idx - 1).close > _listCandles.at(idx - 1).open) {
+        std::cerr << std::fixed << "VOLUME: " << std::setprecision(2) << _listCandles.back().volume << " / MA200: " << _listCandles.back().stats.volume.movingAverage200 << "\n";
+        _signal.action = BUY;
+    }
+}
+
 void Tr::Trade::analyseOfTheMarket()
 {
     checkSwitchTendance();
@@ -80,24 +93,8 @@ void Tr::Trade::analyseOfTheMarket()
         return;
     }
     checkRSIValue();
-
-    // Si bougie haussière + volume supérieur à la moyenne mobile 200
-    // BUY
-
+    //checkMAVolume();
     //checkMACD();
-
-    //this->_signal.percentage =
-    //    (_listCandles.back().stats.bollinger_bands.weirdness * 100.0)
-    //        * (this->_max_order_percentage / 100.0);
-    //if (this->_signal.percentage > 0) {
-    //    this->_signal.action = Tr::Trade::BUY;
-    //    this->_signal.percentage = 0.0;
-    //} else if (this->_signal.percentage < 0) {
-    //    this->_signal.percentage = 0.0;
-    //    this->_signal.action = Tr::Trade::SELL;
-    //} else {
-    //    this->_signal.action = Tr::Trade::PASS;
-    //}
 }
 
 void Tr::Trade::manageAnAction()

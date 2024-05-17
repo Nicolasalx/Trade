@@ -164,7 +164,7 @@ std::pair<double, double> Tr::Trade::computeLotSize(action_e action)
     double percentageTP = 4.0;
     double percentageSL = 3.0;
 
-    double riskPercentage = 20.0;
+    double riskPercentage = 99.0;
     double riskPerTrade = riskPercentage / 100.0;
 
     double accountBalance = 0.0;
@@ -222,7 +222,7 @@ std::pair<double, double> Tr::Trade::computeLotSize(action_e action)
         order.takeProfit = order.priceEntry * (1 + (percentageTP * 0.01));
         order.stopLoss = order.priceEntry * (1 - (percentageSL * 0.01));
 
-        std::cout << "PE: " << entryPrice << " / TP: " << takeProfit << "\n";
+        std::cerr << "PE: " << entryPrice << " / TP: " << takeProfit << "\n";
 
 
         if (newSizeLot > 0 && amountToBet > 1 && _stack.USDT - amountToBet > 0) {            

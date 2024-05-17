@@ -31,9 +31,10 @@ void Tr::Trade::makeStatistics()
     averageCandle(20);
     relativeCandle(20);
     deviationCandle(20);
+    computeMovingAverage200Volume();
 }
 
-void Tr::Trade::checkIntersectionMovingAverage()
+void Tr::Trade::checkSwitchTendance()
 {
     std::size_t idx = _listCandles.size() - 1;
 
@@ -44,7 +45,6 @@ void Tr::Trade::checkIntersectionMovingAverage()
     if (_listCandles.at(idx).stats.moving_average.lastMMShort < _listCandles.at(idx).stats.moving_average.lastMMLong
         && _listCandles.at(idx - 1).stats.moving_average.lastMMShort >= _listCandles.at(idx - 1).stats.moving_average.lastMMLong) {
             isInBearRun = true;
-            // sell all
             _signal.action = SELL;
             _signal.percentage = 100000;
             _orderBook.clear();
@@ -74,13 +74,17 @@ void Tr::Trade::checkMACD()
 
 void Tr::Trade::analyseOfTheMarket()
 {
-    checkIntersectionMovingAverage();
+    checkSwitchTendance();
 
     if (isInBearRun == true) {
         return;
-    } 
+    }
     checkRSIValue();
-    checkMACD();
+
+    // Si bougie haussière + volume supérieur à la moyenne mobile 200
+    // BUY
+
+    //checkMACD();
 
     //this->_signal.percentage =
     //    (_listCandles.back().stats.bollinger_bands.weirdness * 100.0)

@@ -83,6 +83,10 @@ namespace Tr
             double standardDeviation;
         };
 
+        struct volume_t {
+            double movingAverage200;
+        };
+
         struct statistics_t {
             moving_average_t moving_average;
             bollinger_bands_t bollinger_bands;
@@ -90,6 +94,7 @@ namespace Tr
             macd_t macd;
             cloud_t cloud;
             rgs_t rgs;
+            volume_t volume;
         };
 
         struct candle_t {
@@ -202,13 +207,17 @@ namespace Tr
             void deviationCandle(std::size_t period);
             void averageCandle(std::size_t period);
 
+            // Volume
+            void computeMovingAverage200Volume();
+
             // ! Analyse of the market
             double getAmountPortfolio();
             void analyseOfTheMarket();
-            void checkIntersectionMovingAverage();
+            void checkSwitchTendance();
             void checkRSIValue();
             void checkTPSL();
             void checkMACD();
+            double computeEMA2(std::size_t period, std::vector<double>& values);
 
             // Utils
             int getInt(const std::string &input);

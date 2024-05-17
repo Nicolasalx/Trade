@@ -44,6 +44,4 @@ void Tr::Trade::computeRSI()
     rs = avg_gain / avg_loss;
     rsi = 100.0 - (100.0 / (1.0 + rs));
     _listCandles.back().stats.rsi.rsi = rsi;
-
-    // std::cout << "RSI: " << rsi << "\n";
 }

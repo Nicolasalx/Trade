@@ -69,14 +69,6 @@ namespace Tr
             double signal = 0.0;
         };
 
-        struct cloud_t {
-            double tenkanSen9;
-            double kijunSen26;
-            double lagging26;
-            double senkouSpanA;
-            double senkouSpanB;
-        };
-
         struct rgs_t {
             double relative;
             double movingAverage;
@@ -92,7 +84,6 @@ namespace Tr
             bollinger_bands_t bollinger_bands;
             rsi_t rsi;
             macd_t macd;
-            cloud_t cloud;
             rgs_t rgs;
             volume_t volume;
         };
@@ -197,10 +188,6 @@ namespace Tr
             // MACD
             void computeMACD();
             double computeEMA(std::size_t period);
-
-            // cloud of Ichimoku
-            void computeCloud();
-            double cloudAverage(std::size_t period);
 
             // RGS
             void relativeCandle(std::size_t period);

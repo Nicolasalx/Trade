@@ -230,6 +230,9 @@ namespace Tr
 
             bool orderOpen = false;
             bool isInBearRun = false;
+
+            std::size_t nbTrade = 0; // ! remove
+            bool toDel = false;
     };
 }
 

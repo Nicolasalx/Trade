@@ -78,10 +78,24 @@ void Tr::Trade::checkMAVolume()
     */
 
     std::size_t idx = _listCandles.size() - 1;
-    if (_listCandles.at(idx).volume > _listCandles.at(idx).stats.volume.movingAverage200 && _listCandles.at(idx).close > _listCandles.at(idx).open &&
-        _listCandles.at(idx - 1).volume > _listCandles.at(idx - 1).stats.volume.movingAverage200 && _listCandles.at(idx - 1).close > _listCandles.at(idx - 1).open) {
-        std::cerr << std::fixed << "VOLUME: " << std::setprecision(2) << _listCandles.back().volume << " / MA200: " << _listCandles.back().stats.volume.movingAverage200 << "\n";
+    //if (_listCandles.at(idx).volume > _listCandles.at(idx).stats.volume.movingAverage200 && _listCandles.at(idx).close > _listCandles.at(idx).open &&
+    //    _listCandles.at(idx - 1).volume > _listCandles.at(idx - 1).stats.volume.movingAverage200 && _listCandles.at(idx - 1).close > _listCandles.at(idx - 1).open && orderOpen == false) {
+    //    std::cerr << std::fixed << "VOLUME: " << std::setprecision(2) << _listCandles.back().volume << " / MA200: " << _listCandles.back().stats.volume.movingAverage200 << "\n";
+    //    _signal.action = BUY;
+    //}
+
+    //if (_listCandles.at(idx).volume > _listCandles.at(idx).stats.volume.movingAverage200 && _listCandles.at(idx).close < _listCandles.at(idx).open) {
+    //    _signal.action = PASS;
+    //}
+
+    double precedentMid = std::abs(_listCandles.at(idx - 1).close - _listCandles.at(idx - 1).open);
+    double differenceMid = std::abs(_listCandles.back().close - _listCandles.back().open);
+    double differenceLow = std::abs(_listCandles.back().close - _listCandles.back().low);
+    if (differenceLow >= differenceMid && _listCandles.at(idx).close < _listCandles.at(idx).open &&
+        precedentMid <= differenceMid) {
+        std::cerr << "MAYBE PE: " << _listCandles.back().close << "\n";
         _signal.action = BUY;
+        toDel = true;
     }
 }
 
@@ -92,8 +106,9 @@ void Tr::Trade::analyseOfTheMarket()
     if (isInBearRun == true) {
         return;
     }
-    checkRSIValue();
-    //checkMAVolume();
+
+    //checkRSIValue();
+    checkMAVolume();
     //checkMACD();
 }
 

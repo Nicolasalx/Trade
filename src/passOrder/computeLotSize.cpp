@@ -222,8 +222,9 @@ std::pair<double, double> Tr::Trade::computeLotSize(action_e action)
         order.takeProfit = order.priceEntry * (1 + (percentageTP * 0.01));
         order.stopLoss = order.priceEntry * (1 - (percentageSL * 0.01));
 
-        std::cerr << "PE: " << entryPrice << " / TP: " << takeProfit << "\n";
+        std::cerr << "Trade n°: " << nbTrade << " / PE: " << entryPrice << " / TP: " << takeProfit << "\n";
 
+        ++nbTrade;
 
         if (newSizeLot > 0 && amountToBet > 1 && _stack.USDT - amountToBet > 0) {            
             _orderBook.push_back(order);

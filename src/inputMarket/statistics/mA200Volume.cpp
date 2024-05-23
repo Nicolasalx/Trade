@@ -9,7 +9,7 @@
 
 void Tr::Trade::computeMovingAverage200Volume()
 {
-    int period = 20;
+    int period = 200;
 
     if (_listCandles.size() < std::size_t(period)) {
         return;

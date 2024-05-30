@@ -32,11 +32,11 @@ namespace Tr
 
         struct settings_t {
             std::string player_names = "";
-            std::string your_bot = ""; // Check surement relié au player name
+            std::string your_bot = "";
             std::size_t timebank = 0;
             std::size_t time_per_move = 0;
             std::size_t candle_interval = 0;
-            std::string candle_format = ""; // Change la facon dont on parse
+            std::string candle_format = "";
             std::size_t candles_total = 0;
             std::size_t candles_given = 0;
             std::size_t initial_stack = 0;
@@ -168,7 +168,6 @@ namespace Tr
             std::pair<double, double> computeLotSize2(action_e action, double percentage);
             std::pair<double, double> computeSimpleOrder(action_e action, double amount);
 
-
             // ! Statistics
             void makeStatistics();
 
@@ -201,16 +200,18 @@ namespace Tr
             double getAmountPortfolio();
             void analyseOfTheMarket();
             void checkSwitchTendance();
-            void checkRSIValue();
+            void boolingerBandsRsiAlgorithm();
             void checkTPSL();
             void checkMACD();
-            void checkMAVolume();
+            void candleAlgorithm();
 
             // Utils
             int getInt(const std::string &input);
             double getDouble(const std::string &input);
 
-            struct info_orders_t { // ! To remove
+            void displayBoardOrder();
+
+            struct info_orders_t {
                 std::size_t winBuy = 0;
                 std::size_t looseBuy = 0;
                 std::size_t winSell = 0;
@@ -218,10 +219,11 @@ namespace Tr
             };
 
         private:
-            info_orders_t info_orders; // ! To remove
+            info_orders_t info_orders;
             std::vector <candle_t> _listCandles;
             std::vector<candle_format_e> _candleFormat;
             std::list<order_t> _orderBook;
+            std::list<order_t> _finalBook;
             settings_t _settings;
             stack_t _stack;
             bool _stopLoop = false;

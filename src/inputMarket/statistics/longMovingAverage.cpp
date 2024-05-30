@@ -7,7 +7,6 @@
 
 #include "trade.hpp"
 
-// Moyenne mobile sur 50 jours
 void Tr::Trade::computeLongMovingAverage()
 {
     int period = 50;

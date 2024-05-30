@@ -49,5 +49,4 @@ void Tr::Trade::orderAction(const std::string &pair, std::pair<double, double> l
         decreaseAmount(lineTokens[1], lot_amountUSDT.first);
         increaseAmount(lineTokens[0], lot_amountUSDT.second);
     }
-    //std::cout << "STACK USDT: " << _stack.USDT << " / STACK BTC: " << _stack.BTC << "\n";
 }

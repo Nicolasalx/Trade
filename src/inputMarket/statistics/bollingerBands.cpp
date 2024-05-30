@@ -24,7 +24,6 @@ void Tr::Trade::checkOnePairBolBand(std::size_t period)
         (_listCandles.back().close - lowerBand) / (upperBand - lowerBand);
 }
 
-// Bande de Bollinger
 void Tr::Trade::computeBollingerBands()
 {
     std::size_t period = 20;

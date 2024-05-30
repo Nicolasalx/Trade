@@ -13,8 +13,7 @@ double Tr::Trade::computeEMA(std::size_t period)
     double ema = 0.0;
 
     for (int i = int(this->_listCandles.size()) - period - 1;
-        i < int(this->_listCandles.size()); ++i)
-    {
+        i < int(this->_listCandles.size()); ++i) {
         ema += (this->_listCandles.at(i).close - ema) * multiplier;
     }
     return ema;
@@ -27,6 +26,4 @@ void Tr::Trade::computeMACD()
     }
     this->_listCandles.back().stats.macd.macd = computeEMA(26);
     this->_listCandles.back().stats.macd.signal = computeEMA(12);
-    //std::cerr << "MACD: " << this->_listCandles.back().stats.macd.macd <<
-    //    ", signal: " << this->_listCandles.back().stats.macd.signal << "\n";
 }

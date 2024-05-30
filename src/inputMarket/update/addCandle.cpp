@@ -39,7 +39,7 @@ void Tr::Trade::addCryptoCandle(const std::string &cryptoLine)
         } else if (_candleFormat.at(i) == CLOSE) {
             candle.close = getDouble(dataCrypto.at(i));
         } else if (_candleFormat.at(i) == VOLUME) {
-            candle.volume = getDouble(dataCrypto.at(i));            
+            candle.volume = getDouble(dataCrypto.at(i));
         }
     }
     _listCandles.push_back(candle);

@@ -37,16 +37,10 @@ std::pair<double, double> Tr::Trade::computeOrderSize(action_e action, double pe
         double sizeLot = amountAfterFees / _listCandles.back().close;
         double newSizeLot = sizeLot;
 
-        //std::cout << "AMOUNT AFTER FEES: " << amountAfterFees << "\n";
-        //std::cout << "SIZE LOT: " << sizeLot << "\n";
-
         if (_stack.BTC - sizeLot < 0) {
             newSizeLot = _stack.BTC;
-            //std::cout << "NEW SIZE LOT: " << sizeLot << "\n";
             amountAfterFees = (newSizeLot * amountAfterFees) / sizeLot;
-            //std::cout << "New AMOUNT: " << amountAfterFees << "\n";
         }
-
         return std::make_pair(newSizeLot, amountAfterFees);
     }
 }
@@ -71,6 +65,7 @@ std::pair<double, double> Tr::Trade::computeLotSize2(action_e action, double per
         order.stopLoss = order.priceEntry * (1 - (percentageSL * 0.01));
 
         _orderBook.push_back(order);
+        _finalBook.push_back(order);
         return std::make_pair(sizeLot, amountToBet);
 
     } else {
@@ -88,31 +83,9 @@ std::pair<double, double> Tr::Trade::computeLotSize2(action_e action, double per
         order.stopLoss = order.priceEntry * (1 - (percentageSL * 0.01));
         
         _orderBook.push_back(order);
+        _finalBook.push_back(order);
         return std::make_pair(sizeLot, amountToBet);
     }
-
-    /*
-    - BUY
-        - Définir le montant après percentage
-        - Définir le montant après fees
-        - Définir le montant crypto
-
-        - Placer order stopLoss BUY
-        - Price Entry = PE
-        - Take Profit = PE + 5%
-        - Stop Loss = PE - 5%
-
-    - SELL
-        - Définir le montant de crypto après percentage
-        - Définir le montant de crypto après les frais
-        - Définir le montant USDT
-
-        - Placer order stopLoss SELL
-        - Price Entry = PE
-        - Take Profit = PE + 5%
-        - Stop Loss = PE - 5%
-
-    */
 }
 
 std::pair<double, double> Tr::Trade::computeSimpleOrder(action_e action, double amount)
@@ -123,15 +96,10 @@ std::pair<double, double> Tr::Trade::computeSimpleOrder(action_e action, double 
 
         if (_stack.USDT - amountInUSDT < 0) {
             double partToKeep = 2.0;
-            amountInUSDT = _stack.USDT - ((_stack.USDT * partToKeep) / 100.0); // On achète le reste du portefeuille
+            amountInUSDT = _stack.USDT - ((_stack.USDT * partToKeep) / 100.0);
             double amountWithoutFees = amountInUSDT - ((amountInUSDT * _settings.transaction_fee_percent) / 100.0);
             amount = amountWithoutFees / _listCandles.back().close;
         }
-        //std::cout << "BTC: " << _stack.BTC << " / USDT: " << _stack.USDT << "\n"; 
-        //std::cout << "SIZELOT: +" << amount << " / AMOUNT: -" << amountInUSDT << "\n";
-
-
-
         return std::make_pair(amount, amountInUSDT);
     } else {
         double newAmount = amount + ((amount * _settings.transaction_fee_percent) / 100.0);
@@ -143,10 +111,6 @@ std::pair<double, double> Tr::Trade::computeSimpleOrder(action_e action, double 
             double lotWithoutFees = sizeLot + ((sizeLot * _settings.transaction_fee_percent) / 100.0);
             amount = lotWithoutFees * _listCandles.back().close;
         }
-
-        //std::cout << "BTC: " << _stack.BTC << " / USDT: " << _stack.USDT << "\n"; 
-        //std::cout << "SIZELOT: -" << sizeLot << " / AMOUNT: +" << amount << "\n";
-
         return std::make_pair(sizeLot, amount);
     }
 }
@@ -154,23 +118,19 @@ std::pair<double, double> Tr::Trade::computeSimpleOrder(action_e action, double 
 std::pair<double, double> Tr::Trade::computeLotSize(action_e action)
 {
     /*
-        Les paramètres sont les suivants:
+        The parameters are as follows:
             riskPercentage = 2%
-            accountBalance = Si c'est du BUY alors on donne _stack.USDT / Si c'est du SELL alors on donne (_stack.BTC * _listCandle.back().close)
-            entryPrice = PE qu'on a défini
-            stopLoss = SL qu'on a défini
+            accountBalance = If BUY then _stack.USDT / If SELL then (_stack.BTC * _listCandle.back().close)
+            entryPrice = PE as defined
+            stopLoss = SL as defined
     */
 
     double percentageTP = 4.0;
     double percentageSL = 3.0;
-
     double riskPercentage = 99.0;
     double riskPerTrade = riskPercentage / 100.0;
-
     double accountBalance = 0.0;
-
     double entryPrice = _listCandles.back().close;
-
     double stopLoss = 0.0;
     double takeProfit = 0.0;
 
@@ -178,7 +138,7 @@ std::pair<double, double> Tr::Trade::computeLotSize(action_e action)
         stopLoss = entryPrice * (1 - (percentageSL * 0.01));
         takeProfit = entryPrice * (1 + (percentageTP * 0.01));
     } else {
-        stopLoss = entryPrice * (1 + (percentageTP * 0.01));        
+        stopLoss = entryPrice * (1 + (percentageTP * 0.01));
         takeProfit = entryPrice * (1 - (percentageSL * 0.01));
     }
 
@@ -191,24 +151,11 @@ std::pair<double, double> Tr::Trade::computeLotSize(action_e action)
     double riskAmount = accountBalance * riskPerTrade;
     double difference = entryPrice - stopLoss;
     double positionSize = riskAmount / difference;
-
-    // SL Amount
     double amountToBet = positionSize * difference;
-
-    // TP Amount
-    double profitPotential = positionSize * (takeProfit - entryPrice);
-
     double sizeLot = amountToBet / entryPrice;
 
     order_t order;
 
-    //std::cout << "PRICE ENTRY: " << entryPrice << "\n";
-    //std::cout << "STOP LOSS: " << stopLoss << "\n";
-    //std::cout << "TAKE PROFIT: " << takeProfit << "\n";
-    //std::cout << "SIZE LOT: " << sizeLot << "\n";
-    //std::cout << "RiskAmount: " << accountBalance << "\n";
-
-    // Part with transaction fees
     if (action == BUY) {
         double amountAfterFees = amountToBet - (amountToBet * (_settings.transaction_fee_percent / 100.0));
         double newSizeLot = (amountAfterFees * sizeLot) / amountToBet;
@@ -222,12 +169,11 @@ std::pair<double, double> Tr::Trade::computeLotSize(action_e action)
         order.takeProfit = order.priceEntry * (1 + (percentageTP * 0.01));
         order.stopLoss = order.priceEntry * (1 - (percentageSL * 0.01));
 
-        std::cerr << "Trade n°: " << nbTrade << " / PE: " << entryPrice << " / TP: " << takeProfit << "\n";
-
         ++nbTrade;
 
         if (newSizeLot > 0 && amountToBet > 1 && _stack.USDT - amountToBet > 0) {            
             _orderBook.push_back(order);
+            _finalBook.push_back(order);
         } else {
             newSizeLot = 0;
             amountToBet = 0;
@@ -249,6 +195,8 @@ std::pair<double, double> Tr::Trade::computeLotSize(action_e action)
 
         if (sizeLot > 0 && newAmountToBet > 1 && _stack.BTC - sizeLot > 0) {
             _orderBook.push_back(order);
+            _finalBook.push_back(order);
+
         } else {
             throw my::tracked_exception("Failed to SELL amount is 0!");
         }

@@ -51,7 +51,7 @@ void Tr::Trade::checkSwitchTendance()
     }
 }
 
-void Tr::Trade::checkRSIValue()
+void Tr::Trade::boolingerBandsRsiAlgorithm()
 {
     if ((_listCandles.back().stats.rsi.rsi < 30 || _listCandles.back().close < _listCandles.back().stats.bollinger_bands.lowerBand) && orderOpen == false) {
         _signal.action = Tr::Trade::BUY;
@@ -69,47 +69,57 @@ void Tr::Trade::checkMACD()
     }
 }
 
-#include <iomanip>
-
-void Tr::Trade::checkMAVolume()
+void Tr::Trade::candleAlgorithm()
 {
     /*
         This strategy consist to check the two last volume and if they are above the moving average 200 AND if they are both positive candle => It's a signal
     */
+    if (_listCandles.size() < 3) {
+        return;
+    }
 
     std::size_t idx = _listCandles.size() - 1;
-    //if (_listCandles.at(idx).volume > _listCandles.at(idx).stats.volume.movingAverage200 && _listCandles.at(idx).close > _listCandles.at(idx).open &&
-    //    _listCandles.at(idx - 1).volume > _listCandles.at(idx - 1).stats.volume.movingAverage200 && _listCandles.at(idx - 1).close > _listCandles.at(idx - 1).open && orderOpen == false) {
-    //    std::cerr << std::fixed << "VOLUME: " << std::setprecision(2) << _listCandles.back().volume << " / MA200: " << _listCandles.back().stats.volume.movingAverage200 << "\n";
-    //    _signal.action = BUY;
-    //}
-
-    //if (_listCandles.at(idx).volume > _listCandles.at(idx).stats.volume.movingAverage200 && _listCandles.at(idx).close < _listCandles.at(idx).open) {
-    //    _signal.action = PASS;
-    //}
-
     double precedentMid = std::abs(_listCandles.at(idx - 1).close - _listCandles.at(idx - 1).open);
     double differenceMid = std::abs(_listCandles.back().close - _listCandles.back().open);
     double differenceLow = std::abs(_listCandles.back().close - _listCandles.back().low);
+
     if (differenceLow >= differenceMid && _listCandles.at(idx).close < _listCandles.at(idx).open &&
-        precedentMid <= differenceMid) {
-        std::cerr << "MAYBE PE: " << _listCandles.back().close << "\n";
+        precedentMid <= differenceMid && orderOpen == false) {
         _signal.action = BUY;
         toDel = true;
     }
+}
+
+void Tr::Trade::displayBoardOrder()
+{
+    for (const auto &order: _finalBook) {
+        if (order.action == BUY) {
+            std::cerr << "BUY ORDER => ";
+        }
+        std::cerr << "Entry Price: " << order.priceEntry << " / Take Profit: " << order.takeProfit << " / Stop Loss: " << order.stopLoss << "\n";
+    }
+    std::cerr << "\n\n-------------------------------\n";
+    std::cerr << "---   REPORT ORDER BOOK:" << "    ---\n";
+    std::cerr << "---   NB WIN BUY: " << info_orders.winBuy << "         ---\n";
+    std::cerr << "---   NB LOOSE BUY: " << info_orders.looseBuy << "       ---\n";
+    std::cerr << "---   NB WIN SELL: " << info_orders.winSell << "        ---\n";
+    std::cerr << "---   NB LOOSE SELL: " << info_orders.looseSell << "      ---\n";
+    std::cerr << "-------------------------------\n";
 }
 
 void Tr::Trade::analyseOfTheMarket()
 {
     checkSwitchTendance();
 
+    if (_listCandles.size() == this->_settings.candles_total) {
+        displayBoardOrder();
+        return;
+    }
     if (isInBearRun == true) {
         return;
     }
-
-    //checkRSIValue();
-    checkMAVolume();
-    //checkMACD();
+    boolingerBandsRsiAlgorithm();
+    candleAlgorithm();
 }
 
 void Tr::Trade::manageAnAction()

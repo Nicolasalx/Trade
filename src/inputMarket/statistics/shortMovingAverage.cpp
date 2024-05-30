@@ -7,7 +7,6 @@
 
 #include "trade.hpp"
 
-// Moyenne mobile sur 20 jours
 void Tr::Trade::computeShortMovingAverage()
 {
     int period = 20;
@@ -18,5 +17,4 @@ void Tr::Trade::computeShortMovingAverage()
     double movAvgUSDTBTC = computeMovingAverage(_listCandles, period);
 
     _listCandles.back().stats.moving_average.lastMMShort = movAvgUSDTBTC;
-    //std::cout << "Short USDT_BTC => " << std::to_string(movAvgUSDTBTC) << "\n";
 }

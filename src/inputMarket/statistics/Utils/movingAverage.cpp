@@ -15,5 +15,6 @@ double Tr::Trade::computeMovingAverage(std::vector<candle_t> candlesCrypto, int 
     for (; idx < candlesCrypto.size(); ++idx) {
         movingAverage += candlesCrypto.at(idx).close;
     }
-    return (movingAverage /= static_cast<double>(period));
+    movingAverage /= static_cast<double>(period);
+    return movingAverage;
 }

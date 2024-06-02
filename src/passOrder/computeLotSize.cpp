@@ -166,12 +166,10 @@ std::pair<double, double> Tr::Trade::computeLotSize(action_e action)
         order.takeProfit = order.priceEntry * (1 + (percentageTP * 0.01));
         order.stopLoss = order.priceEntry * (1 - (percentageSL * 0.01));
 
-        if (newSizeLot > 0 && amountToBet > 1 && _stack.USDT - amountToBet > 0) {            
+        if (newSizeLot > 0 && amountToBet > 1 && _stack.USDT - amountToBet > 0) {
             _orderBook.push_back(order);
             _finalBook.push_back(order);
         } else {
-            newSizeLot = 0;
-            amountToBet = 0;
             throw my::tracked_exception("Failed to BUY amount is 0!");
         }
         return std::make_pair(newSizeLot, amountToBet);

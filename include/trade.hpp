@@ -9,7 +9,7 @@
     #define TRADE_HPP_
 
     #include "vector"
-    #include <ctime> 
+    #include <ctime>
     #include <string>
     #include <iostream>
     #include <cctype>
@@ -49,8 +49,9 @@ namespace Tr
         };
 
         struct moving_average_t {
-            double lastMMShort = 0.0;
-            double lastMMLong = 0.0;
+            double lastMMShort20 = 0.0;
+            double lastMMLong50 = 0.0;
+            double lastMMExtremelyLong200 = 0.0;
         };
 
         struct bollinger_bands_t {
@@ -76,7 +77,9 @@ namespace Tr
         };
 
         struct volume_t {
-            double movingAverage200;
+            double movingAverage;
+
+            double diffOpenClose = 0.0;
         };
 
         struct statistics_t {
@@ -175,6 +178,8 @@ namespace Tr
             void computeShortMovingAverage();
             double computeMovingAverage(std::vector<candle_t> candlesCrypto, int period);
             void computeLongMovingAverage();
+            void computeExtremelyLongMovingAverage();
+            void computeMovingAvgOpenClose();
 
             // Boolinger Bands
             void computeBollingerBands();
@@ -194,7 +199,7 @@ namespace Tr
             void averageCandle(std::size_t period);
 
             // Volume
-            void computeMovingAverage200Volume();
+            void computeMovingAverageVolume();
 
             // ! Analyse of the market
             double getAmountPortfolio();
@@ -228,12 +233,11 @@ namespace Tr
             stack_t _stack;
             bool _stopLoop = false;
             signal_t _signal;
-            double _max_order_percentage = 100.0; // between 100 <-> 0
+            double _max_order_percentage = 100.0;
 
             bool orderOpen = false;
             bool isInBearRun = false;
 
-            std::size_t nbTrade = 0; // ! remove
             bool toDel = false;
     };
 }

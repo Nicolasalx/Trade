@@ -20,7 +20,7 @@ void Tr::Trade::setAmountToOneCrypto(const std::string &dataCrypto)
     if (dataAmount.at(0) == "BTC") {
         _stack.BTC = getDouble(dataAmount.at(1));
     } else if (dataAmount.at(0) == "USDT") {
-        _stack.USDT = getDouble(dataAmount.at(1));        
+        _stack.USDT = getDouble(dataAmount.at(1));
     } else {
         throw my::tracked_exception("Parsing Input: In the command stacks, the currency was not recognized");
     }

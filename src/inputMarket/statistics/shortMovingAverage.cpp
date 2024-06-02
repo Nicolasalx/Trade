@@ -16,5 +16,18 @@ void Tr::Trade::computeShortMovingAverage()
     }
     double movAvgUSDTBTC = computeMovingAverage(_listCandles, period);
 
-    _listCandles.back().stats.moving_average.lastMMShort = movAvgUSDTBTC;
+    _listCandles.back().stats.moving_average.lastMMShort20 = movAvgUSDTBTC;
 }
+
+void Tr::Trade::computeExtremelyLongMovingAverage()
+{
+    int period = 200;
+
+    if (_listCandles.size() < std::size_t(period)) {
+        return;
+    }
+    double movAvgUSDTBTC = computeMovingAverage(_listCandles, period);
+
+    _listCandles.back().stats.moving_average.lastMMExtremelyLong200 = movAvgUSDTBTC;
+}
+

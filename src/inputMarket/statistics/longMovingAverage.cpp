@@ -16,5 +16,5 @@ void Tr::Trade::computeLongMovingAverage()
     }
     double movAvgUSDTBTC = computeMovingAverage(_listCandles, period);
 
-    _listCandles.back().stats.moving_average.lastMMLong = movAvgUSDTBTC;
+    _listCandles.back().stats.moving_average.lastMMLong50 = movAvgUSDTBTC;
 }

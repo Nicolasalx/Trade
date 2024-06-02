@@ -23,7 +23,10 @@ void Tr::Trade::checkSignal()
 
 void Tr::Trade::makeStatistics()
 {
+    computeMovingAvgOpenClose();
+    computeMovingAverageVolume();
     computeShortMovingAverage();
+    computeExtremelyLongMovingAverage();
     computeLongMovingAverage();
     computeBollingerBands();
     computeRSI();
@@ -31,19 +34,33 @@ void Tr::Trade::makeStatistics()
     averageCandle(20);
     relativeCandle(20);
     deviationCandle(20);
-    computeMovingAverage200Volume();
 }
 
 void Tr::Trade::checkSwitchTendance()
 {
     std::size_t idx = _listCandles.size() - 1;
 
-    if (_listCandles.at(idx).stats.moving_average.lastMMShort > _listCandles.at(idx).stats.moving_average.lastMMLong
-        && _listCandles.at(idx - 1).stats.moving_average.lastMMShort <= _listCandles.at(idx - 1).stats.moving_average.lastMMLong) {
+    if (_listCandles.back().stats.volume.diffOpenClose < -300) {
+        if (_listCandles.at(idx).stats.moving_average.lastMMShort20 > _listCandles.at(idx).stats.moving_average.lastMMLong50
+            && _listCandles.at(idx - 1).stats.moving_average.lastMMShort20 <= _listCandles.at(idx - 1).stats.moving_average.lastMMLong50) {
+                isInBearRun = false;
+        }
+        if (_listCandles.at(idx).stats.moving_average.lastMMShort20 < _listCandles.at(idx).stats.moving_average.lastMMLong50
+            && _listCandles.at(idx - 1).stats.moving_average.lastMMShort20 >= _listCandles.at(idx - 1).stats.moving_average.lastMMLong50) {
+                isInBearRun = true;
+                _signal.action = SELL;
+                _signal.percentage = 100000;
+                _orderBook.clear();
+        }
+        return;
+    }
+
+    if (_listCandles.at(idx).stats.moving_average.lastMMLong50 > _listCandles.at(idx).stats.moving_average.lastMMExtremelyLong200
+        && _listCandles.at(idx - 1).stats.moving_average.lastMMLong50 <= _listCandles.at(idx - 1).stats.moving_average.lastMMExtremelyLong200) {
             isInBearRun = false;
     }
-    if (_listCandles.at(idx).stats.moving_average.lastMMShort < _listCandles.at(idx).stats.moving_average.lastMMLong
-        && _listCandles.at(idx - 1).stats.moving_average.lastMMShort >= _listCandles.at(idx - 1).stats.moving_average.lastMMLong) {
+    if (_listCandles.at(idx).stats.moving_average.lastMMLong50 < _listCandles.at(idx).stats.moving_average.lastMMExtremelyLong200
+        && _listCandles.at(idx - 1).stats.moving_average.lastMMLong50 >= _listCandles.at(idx - 1).stats.moving_average.lastMMExtremelyLong200) {
             isInBearRun = true;
             _signal.action = SELL;
             _signal.percentage = 100000;
@@ -102,8 +119,6 @@ void Tr::Trade::displayBoardOrder()
     std::cerr << "---   REPORT ORDER BOOK:" << "    ---\n";
     std::cerr << "---   NB WIN BUY: " << info_orders.winBuy << "         ---\n";
     std::cerr << "---   NB LOOSE BUY: " << info_orders.looseBuy << "       ---\n";
-    std::cerr << "---   NB WIN SELL: " << info_orders.winSell << "        ---\n";
-    std::cerr << "---   NB LOOSE SELL: " << info_orders.looseSell << "      ---\n";
     std::cerr << "-------------------------------\n";
 }
 

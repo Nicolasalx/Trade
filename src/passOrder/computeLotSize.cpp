@@ -132,14 +132,11 @@ std::pair<double, double> Tr::Trade::computeLotSize(action_e action)
     double accountBalance = 0.0;
     double entryPrice = _listCandles.back().close;
     double stopLoss = 0.0;
-    double takeProfit = 0.0;
 
     if (action == BUY) {
         stopLoss = entryPrice * (1 - (percentageSL * 0.01));
-        takeProfit = entryPrice * (1 + (percentageTP * 0.01));
     } else {
         stopLoss = entryPrice * (1 + (percentageTP * 0.01));
-        takeProfit = entryPrice * (1 - (percentageSL * 0.01));
     }
 
     if (action == BUY) {
@@ -168,8 +165,6 @@ std::pair<double, double> Tr::Trade::computeLotSize(action_e action)
         order.priceEntry = _listCandles.back().close;
         order.takeProfit = order.priceEntry * (1 + (percentageTP * 0.01));
         order.stopLoss = order.priceEntry * (1 - (percentageSL * 0.01));
-
-        ++nbTrade;
 
         if (newSizeLot > 0 && amountToBet > 1 && _stack.USDT - amountToBet > 0) {            
             _orderBook.push_back(order);

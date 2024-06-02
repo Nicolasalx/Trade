@@ -92,7 +92,7 @@ Test(trade, order_action_buy_valid_input)
     std::string cryptoLine = "USDT_BTC,1624536000,35000.0,34500.0,34800.0,34600.0,10000.0";
     trade.addCryptoCandle(cryptoLine);
     std::string pair = "USDT_BTC";
-    trade.orderAction(pair, 0.01, Tr::Trade::BUY);
+    trade.orderAction(pair, std::make_pair(0.01, 0.1), Tr::Trade::BUY);
     cr_assert(true, "No exception thrown for valid input");
 }
 
@@ -105,7 +105,7 @@ Test(trade, order_action_sell_valid_input)
     std::string cryptoLine = "USDT_BTC,1624536000,35000.0,34500.0,34800.0,34600.0,10000.0";
     trade.addCryptoCandle(cryptoLine);
     std::string pair = "BTC_USDT";
-    trade.orderAction(pair, 0.01, Tr::Trade::BUY);
+    trade.orderAction(pair, std::make_pair(0.01, 0.1), Tr::Trade::BUY);
     cr_assert(true, "No exception thrown for valid input");
 }
 
@@ -119,6 +119,6 @@ Test(trade, order_action_invalid_pair)
     std::string cryptoLine = "USDT_BTC,1624536000,35000.0,34500.0,34800.0,34600.0,10000.0";
     trade.addCryptoCandle(cryptoLine);
 
-    cr_assert_throw(trade.orderAction(pair, 0.01, Tr::Trade::BUY), my::tracked_exception,
+    cr_assert_throw(trade.orderAction(pair, std::make_pair(0.01, 0.1), Tr::Trade::BUY), my::tracked_exception,
         "Exception not thrown for invalid pair");
 }

@@ -694,7 +694,10 @@ basicTest()
         echo -e -n "action order\n"
         echo -e -n "update game next_candles USDT_BTC,1621767600,35800,34600,35004.82,35389.1,238169414.1\n"
         echo -e -n "action order\n"
-    } | ./trade
+    } | ./trade | while IFS= read -r line
+    do
+        echo -e "[\e[92mPASS\e[0m]: $line"
+    done
 }
 
 main()

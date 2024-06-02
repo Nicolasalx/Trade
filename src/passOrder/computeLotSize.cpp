@@ -151,8 +151,6 @@ std::pair<double, double> Tr::Trade::computeLotSize(action_e action)
     double amountToBet = positionSize * difference;
     double sizeLot = amountToBet / entryPrice;
 
-    order_t order;
-
     if (action == BUY) {
         double amountAfterFees = amountToBet - (amountToBet * (_settings.transaction_fee_percent / 100.0));
         double newSizeLot = (amountAfterFees * sizeLot) / amountToBet;

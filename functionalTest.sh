@@ -3,7 +3,6 @@
 initTest()
 {
     echo ""
-    # make re
 }
 
 basicTest()

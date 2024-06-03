@@ -40,6 +40,19 @@ void Tr::Trade::checkSwitchTendance()
 {
     std::size_t idx = _listCandles.size() - 1;
 
+    if (_listCandles.at(idx).stats.moving_average.lastMMShort20 > _listCandles.at(idx).stats.moving_average.lastMMLong50
+            && _listCandles.at(idx - 1).stats.moving_average.lastMMShort20 <= _listCandles.at(idx - 1).stats.moving_average.lastMMLong50) {
+                isInBearRun = false;
+        }
+        if (_listCandles.at(idx).stats.moving_average.lastMMShort20 < _listCandles.at(idx).stats.moving_average.lastMMLong50
+            && _listCandles.at(idx - 1).stats.moving_average.lastMMShort20 >= _listCandles.at(idx - 1).stats.moving_average.lastMMLong50) {
+                isInBearRun = true;
+                _signal.action = SELL;
+                _signal.percentage = 100000;
+                _orderBook.clear();
+        }
+        return;
+
     if (_listCandles.back().stats.volume.diffOpenClose < -300) {
         if (_listCandles.at(idx).stats.moving_average.lastMMShort20 > _listCandles.at(idx).stats.moving_average.lastMMLong50
             && _listCandles.at(idx - 1).stats.moving_average.lastMMShort20 <= _listCandles.at(idx - 1).stats.moving_average.lastMMLong50) {

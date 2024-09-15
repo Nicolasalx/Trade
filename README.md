@@ -169,7 +169,3 @@ Each line of the file is a candle represented like that in trading
     - each time an action is requested, the timebank is increased (100-500ms)
     - the time needed by the bot to request is deducted from the timebank
     - if the bot is too slow, the timebank will be exhausted
-
-# Our algorithm
-
-It's coming ...

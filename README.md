@@ -10,6 +10,12 @@ Today, most of the transactions are processed by algorithmic trading.
 
 The goal of this project is to create a trading bot that will bring about a revolution of the trade markets.
 
+# Result
+
+![Trade1](./assets/Trade1.png)
+![Trade1](./assets/Trade2.png)
+![Trade1](./assets/Trade3.png)
+
 # How use
 
 To test our bot you need to use 'ai_bot_workspace'.
@@ -19,19 +25,19 @@ Download it from the [Github source](https://github.com/jmerle/ai-bot-workspace/
 - If you’re on Linux, you should use ai-bot-workspace-2.4.3-x86_64.AppImage
 - If you’re on Windows, you sould use ai-bot-workspace-setup-2.4.3.exe
 
-![image](https://github.com/EpitechPromo2027/B-CNA-410-PAR-4-1-trade-thibaud.cathala/assets/114945623/309bb40e-2a23-4181-bde0-74b40ab7413e)
+![image](./assets/portal.png)
 
 The executables launch ai-bot-workspace’s portal. There, you must select Crypto Trader
 
 After go to the settings here:
 
-![image](https://github.com/EpitechPromo2027/B-CNA-410-PAR-4-1-trade-thibaud.cathala/assets/114945623/fc230253-dc0a-4df9-ab4f-1aaf80d5ac73)
+![image](./assets/option1.png)
 
 Now let's see the field where we need to configure.
 
 The three main points are on the image below:
 
-![image](https://github.com/EpitechPromo2027/B-CNA-410-PAR-4-1-trade-thibaud.cathala/assets/114945623/e530508a-bcf7-4b20-8fa0-3ec9872afecc)
+![image](./assets/option2.png)
 
 1) The point is the absolute path where your binary is placed.
 2) The point is the place where your file .csv who contains your date is placed, but the path begin at your actual place.
@@ -152,11 +158,11 @@ void Tr::Trade::pass()
 
 A training file is represented like this:
 
-![image](https://github.com/EpitechPromo2027/B-CNA-410-PAR-4-1-trade-thibaud.cathala/assets/114945623/26e40b5b-8035-49e9-a1d4-5fa8ffc87ec0)
+![image](./assets/dataset.png)
 
 Each line of the file is a candle represented like that in trading
 
-![Capture d’écran du 2024-05-07 16-30-28](https://github.com/EpitechPromo2027/B-CNA-410-PAR-4-1-trade-thibaud.cathala/assets/114945623/50e5e0a4-8d79-4d0a-a9e8-8b0bc74f554c)
+![image](./assets/candle.png)
 
 # Technicalities
 

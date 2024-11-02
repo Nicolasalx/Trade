@@ -12,9 +12,9 @@ The goal of this project is to create a trading bot that will bring about a revo
 
 # Result
 
-![Trade1](./assets/Trade1.png)
-![Trade1](./assets/Trade2.png)
-![Trade1](./assets/Trade3.png)
+![image](https://github.com/user-attachments/assets/58a99366-d41e-4a78-a47b-197ef6d9a57a)
+![image](https://github.com/user-attachments/assets/58eed9a1-4fab-4005-a0a2-ab6ba1916038)
+![image](https://github.com/user-attachments/assets/575bcbab-eea8-45cc-b323-569735a4bb63)
 
 # How use
 
@@ -25,19 +25,19 @@ Download it from the [Github source](https://github.com/jmerle/ai-bot-workspace/
 - If you’re on Linux, you should use ai-bot-workspace-2.4.3-x86_64.AppImage
 - If you’re on Windows, you sould use ai-bot-workspace-setup-2.4.3.exe
 
-![image](./assets/portal.png)
+![image](https://github.com/user-attachments/assets/109bef01-c322-424f-8386-19abe539ca51)
 
 The executables launch ai-bot-workspace’s portal. There, you must select Crypto Trader
 
 After go to the settings here:
 
-![image](./assets/option1.png)
+![image](https://github.com/user-attachments/assets/0b3c229c-5fd3-467a-a350-69ea1a7ea801)
 
 Now let's see the field where we need to configure.
 
 The three main points are on the image below:
 
-![image](./assets/option2.png)
+![image](https://github.com/user-attachments/assets/d1319912-160d-49a2-9ebf-5fcda78e4e68)
 
 1) The point is the absolute path where your binary is placed.
 2) The point is the place where your file .csv who contains your date is placed, but the path begin at your actual place.
@@ -158,11 +158,11 @@ void Tr::Trade::pass()
 
 A training file is represented like this:
 
-![image](./assets/dataset.png)
+![image](https://github.com/user-attachments/assets/530e4866-6cf8-46fe-bdd4-ab8a1649be2a)
 
 Each line of the file is a candle represented like that in trading
 
-![image](./assets/candle.png)
+![image](https://github.com/user-attachments/assets/d1a259a2-e581-4e43-a006-044d473a2734)
 
 # Technicalities
 

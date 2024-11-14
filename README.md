@@ -14,15 +14,15 @@ The goal of this project is to create a trading bot that will bring about a revo
 
 We start with a starting capital of $1,000 in Bitcoin.
 
-On the first curve, we have a profit of $231 in 2 weeks.
+### On the first curve, we have a profit of $231 in 2 weeks.
 
 ![image](https://github.com/user-attachments/assets/58a99366-d41e-4a78-a47b-197ef6d9a57a)
 
-On the second curve we have a profit of $62 in 1 week.
+### On the second curve we have a profit of $62 in 1 week.
 
 ![image](https://github.com/user-attachments/assets/575bcbab-eea8-45cc-b323-569735a4bb63)
 
-On the third curve we have a profit of $55 in 1 week.
+### On the third curve we have a profit of $55 in 1 week.
 
 ![image](https://github.com/user-attachments/assets/58eed9a1-4fab-4005-a0a2-ab6ba1916038)
 
